@@ -1,4 +1,4 @@
-# Armadietto Medicinali v5.0.3
+# Armadietto Medicinali v5.0.4
 
 File pronti per il repository GitHub Pages `armadietto`.
 
@@ -22,3 +22,9 @@ Il file `Code.gs` va in un progetto Google Apps Script distribuito come Web App.
 7. In Backup e sincronizzazione inserire lo stesso PIN.
 
 La ricerca dei farmaci umani usa l'anagrafica AIFA e mostra il livello ATC 2.
+
+## Scanner reale
+Lo scanner legge barcode Code 39 e DataMatrix, estrae l'AIC e interroga AIFA.
+Quando la confezione viene riconosciuta compila automaticamente nome, principio
+attivo, dosaggio e categoria ATC. Se presente nel DataMatrix, acquisisce anche
+la data di scadenza.
