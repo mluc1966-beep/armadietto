@@ -1,5 +1,5 @@
 /**
- * Armadietto Medicinali v5 - backend Google Apps Script
+ * Armadietto Medicinali v5.0.4 - backend Google Apps Script
  * Funzioni:
  *  - ricerca AIFA nome -> ATC livello 2
  *  - backup cloud JSON protetto da PIN
@@ -14,7 +14,7 @@
  * 3. Copia l'URL /exec nell'app.
  */
 
-const AIFA_PACKAGES_URL = 'https://drive.aifa.gov.it/farmaci/confezioni_fornitura.csv';
+const AIFA_SEARCH_URL = 'https://api.aifa.gov.it/aifa-bdf-eif-be/1.0.0/formadosaggio/ricerca';
 const AIFA_ATC_URL = 'https://drive.aifa.gov.it/farmaci/atc.csv';
 const BACKUP_FILE = 'armadietto_v5_backup.json';
 
@@ -27,6 +27,7 @@ function doGet(e) {
   try {
     const a = String((e.parameter && e.parameter.action) || '');
     if (a === 'aifaSearch') return json_(aifaSearch_(e.parameter.q || ''));
+    if (a === 'aifaBarcode') return json_(aifaBarcode_(e.parameter.code || ''));
     if (a === 'syncGet') return json_(syncGet_(e.parameter.pin || ''));
     return json_({ok:true, service:'Armadietto v5 backend'});
   } catch (err) {
@@ -82,53 +83,119 @@ function aifaSearch_(query) {
   const cached = cache.get(key);
   if (cached) return JSON.parse(cached);
 
-  const rows = fetchCsv_(AIFA_PACKAGES_URL);
-  if (rows.length < 2) throw new Error('Anagrafica AIFA vuota');
-  const h = rows[0];
-  const iName = headerIndex_(h,['DENOMINAZIONE','DENOMINAZIONE_MEDICINALE','NOME_MEDICINALE']);
-  const iAtc = headerIndex_(h,['CODICE_ATC','ATC']);
-  const iAic = headerIndex_(h,['CODICE_AIC','AIC','COD_FARMACO']);
-  if (iName < 0 || iAtc < 0) throw new Error('Colonne AIFA non riconosciute');
-
-  const scored = [];
-  for (let i=1;i<rows.length;i++) {
-    const r=rows[i], name=String(r[iName]||''), atc=String(r[iAtc]||'').trim();
-    if (!name || !atc) continue;
-    const n=norm_(name);
-    let score=0;
-    if(n===q) score=100;
-    else if(n.startsWith(q+' ')) score=80;
-    else if(n.includes(q)) score=60;
-    else {
-      const words=q.split(' ').filter(x=>x.length>2);
-      if(words.length && words.every(w=>n.includes(w))) score=45;
-    }
-    if(score) scored.push({score,name,atc,aic:iAic>=0?String(r[iAic]||''):''});
-  }
-  scored.sort((a,b)=>b.score-a.score || a.name.length-b.name.length);
-
-  const atc2Codes=[...new Set(scored.slice(0,80).map(x=>x.atc.slice(0,3)).filter(x=>x.length===3))];
-  const atcRows=fetchCsv_(AIFA_ATC_URL);
-  const ah=atcRows[0]||[];
-  const aiCode=headerIndex_(ah,['CODICE_ATC','ATC']);
-  const aiDesc=headerIndex_(ah,['DESCRIZIONE','DESCRIZIONE_ATC']);
-  const atcMap={};
-  for(let i=1;i<atcRows.length;i++){
-    const c=String(atcRows[i][aiCode]||'').trim();
-    if(c.length===3) atcMap[c]=String(atcRows[i][aiDesc]||'').trim();
-  }
-
+  const searchResponse = UrlFetchApp.fetch(
+    AIFA_SEARCH_URL+'?query='+encodeURIComponent(String(query).trim())+'&page=0&size=20',
+    {muteHttpExceptions:true,followRedirects:true,headers:{Accept:'application/json'}}
+  );
+  if(searchResponse.getResponseCode()!==200) throw new Error('Ricerca AIFA HTTP '+searchResponse.getResponseCode());
+  const payload=JSON.parse(searchResponse.getContentText('UTF-8'));
+  const content=payload && payload.data && payload.data.content || [];
+  const atcMap=atc2Map_();
   const seen={}, results=[];
-  for(const x of scored){
-    const atc2=x.atc.slice(0,3);
-    if(atc2.length!==3 || seen[atc2]) continue;
-    seen[atc2]=1;
-    results.push({name:x.name,aic:x.aic,atc:x.atc,atc2,atc2Name:atcMap[atc2]||atc2});
+  for(const item of content){
+    const med=item.medicinale||{};
+    const name=String(med.denominazioneMedicinale||'').trim();
+    const active=(item.principiAttiviIt||[]).join(' + ');
+    const aic=item.confezioni&&item.confezioni[0]?String(item.confezioni[0].aic||''):'';
+    for(const code of (item.codiceAtc||[])){
+      const atc=String(code||'').trim(),atc2=atc.slice(0,3);
+      if(!name||atc2.length!==3||seen[atc2]) continue;
+      seen[atc2]=1;
+      results.push({name,aic,atc,atc2,atc2Name:atcMap[atc2]||atc2,active,strength:String(item.descrizioneFormaDosaggio||'')});
+      if(results.length>=6) break;
+    }
     if(results.length>=6) break;
   }
   const out={ok:true,results};
   try{cache.put(key,JSON.stringify(out),21600)}catch(_){}
   return out;
+}
+
+function aifaPayload_(query) {
+  const response = UrlFetchApp.fetch(
+    AIFA_SEARCH_URL+'?query='+encodeURIComponent(String(query).trim())+'&page=0&size=20',
+    {muteHttpExceptions:true,followRedirects:true,headers:{Accept:'application/json'}}
+  );
+  if(response.getResponseCode()!==200) throw new Error('Ricerca AIFA HTTP '+response.getResponseCode());
+  const payload=JSON.parse(response.getContentText('UTF-8'));
+  return payload && payload.data && payload.data.content || [];
+}
+
+function barcodeInfo_(raw) {
+  const text=String(raw||'').trim(), candidates=[];
+  const add=function(value){
+    const digits=String(value||'').replace(/\D/g,'');
+    if(digits.length===9 && candidates.indexOf(digits)<0) candidates.push(digits);
+  };
+  let match;
+  const ai710=/(?:\(710\)|(?:^|\x1D)710)(\d{9})/g;
+  while((match=ai710.exec(text))) add(match[1]);
+  const aicAnywhere=/(?:^|\D)(0\d{8})(?=\D|$)/g;
+  while((match=aicAnywhere.exec(text))) add(match[1]);
+  if(/^\d{9}$/.test(text)) add(text);
+  // Il vecchio bollino italiano usa CODE 32: il lettore può restituire
+  // sia il testo leggibile A+8 cifre, sia i 6 caratteri in base 32.
+  match=text.toUpperCase().match(/^A(\d{8})$/);
+  if(match) add('0'+match[1]);
+  const code32=text.toUpperCase().replace(/^A(?=[0-9BCDFGHJKLMNPQRSTUVWXYZ]{6}$)/,'');
+  if(/^[0-9BCDFGHJKLMNPQRSTUVWXYZ]{6}$/.test(code32)){
+    const alphabet='0123456789BCDFGHJKLMNPQRSTUVWXYZ';
+    let number=0,valid=true;
+    for(let i=0;i<code32.length;i++){
+      const digit=alphabet.indexOf(code32.charAt(i));
+      if(digit<0){valid=false;break;}
+      number=number*32+digit;
+    }
+    if(valid) add(String(number).padStart(9,'0'));
+  }
+
+  let expiry='';
+  match=text.match(/(?:\(17\)|(?:^|\x1D)17)(\d{6})/);
+  if(match){
+    const yy=+match[1].slice(0,2),mm=+match[1].slice(2,4),dd=+match[1].slice(4,6);
+    if(mm>=1&&mm<=12&&dd>=0&&dd<=31) expiry='20'+String(yy).padStart(2,'0')+'-'+String(mm).padStart(2,'0')+'-'+String(dd||1).padStart(2,'0');
+  }
+  return {candidates:candidates,expiry:expiry};
+}
+
+function aifaBarcode_(raw) {
+  const info=barcodeInfo_(raw);
+  if(!String(raw||'').trim()) return {ok:false,error:'Codice mancante'};
+  if(!info.candidates.length) return {ok:true,result:null,expiry:info.expiry,error:'AIC non presente nel codice letto'};
+  const atcMap=atc2Map_();
+  for(const aic of info.candidates){
+    const content=aifaPayload_(aic);
+    for(const item of content){
+      const packages=item.confezioni||[];
+      const pack=packages.find(function(p){return String(p.aic||'').replace(/\D/g,'')===aic;});
+      if(!pack) continue;
+      const med=item.medicinale||{},atc=String((item.codiceAtc||[])[0]||'').trim(),atc2=atc.slice(0,3);
+      return {ok:true,result:{
+        name:String(med.denominazioneMedicinale||'').trim(),
+        aic:aic,atc:atc,atc2:atc2,atc2Name:atcMap[atc2]||atc2,
+        active:(item.principiAttiviIt||[]).join(' + '),
+        strength:String(item.descrizioneFormaDosaggio||''),
+        packageName:String(pack.denominazioneConfezione||pack.descrizione||'')
+      },expiry:info.expiry};
+    }
+  }
+  return {ok:true,result:null,expiry:info.expiry,error:'Confezione non trovata nella banca dati AIFA'};
+}
+
+function atc2Map_(){
+  const cache=CacheService.getScriptCache(),key='AIFA_ATC2_MAP_V1',cached=cache.get(key);
+  if(cached) return JSON.parse(cached);
+  const rows=fetchCsv_(AIFA_ATC_URL),head=rows[0]||[];
+  const iCode=headerIndex_(head,['CODICE_ATC','ATC']);
+  const iDesc=headerIndex_(head,['DESCRIZIONE','DESCRIZIONE_ATC']);
+  if(iCode<0||iDesc<0) throw new Error('Anagrafica ATC non riconosciuta');
+  const map={};
+  for(let i=1;i<rows.length;i++){
+    const code=String(rows[i][iCode]||'').trim();
+    if(code.length===3) map[code]=String(rows[i][iDesc]||'').trim();
+  }
+  try{cache.put(key,JSON.stringify(map),21600)}catch(_){}
+  return map;
 }
 
 function expectedPin_() {
