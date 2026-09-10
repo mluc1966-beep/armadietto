@@ -1,0 +1,9 @@
+{
+  "name": "Armadietto Medicinali",
+  "short_name": "Armadietto",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#edf4f8",
+  "theme_color": "#dfeaf2",
+  "icons": []
+}
