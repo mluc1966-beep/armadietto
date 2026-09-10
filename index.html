@@ -2,1092 +2,204 @@
 <html lang="it">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="theme-color" content="#dfeaf2">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <title>Armadietto Medicinali</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="manifest" href="manifest.json">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-body{font-family:'DM Sans',sans-serif;min-height:100vh;overflow-x:hidden;transition:background .3s,color .3s}
-
-/* ── TEMI ── */
-body.sepia{--bg:#f5f0e8;--bg2:#ede7d9;--bg3:#e4dccb;--card:#faf7f2;--card2:#ede8de;--accent:#8a7a5a;--accent2:#6b5c3e;--accent3:#5e7a60;--green:#5e7a60;--yellow:#c4922a;--red:#b84c3a;--text:#2e2618;--text2:#6b5e46;--text3:#9e8e74;--border:rgba(100,80,50,0.15);--shadow:0 4px 20px rgba(100,80,50,0.12)}
-body.salvia{--bg:#eef3ee;--bg2:#e2ece2;--bg3:#d5e4d5;--card:#f6faf6;--card2:#dfeadf;--accent:#4a7c59;--accent2:#346045;--accent3:#7aaa8a;--green:#4a7c59;--yellow:#c4922a;--red:#c0412e;--text:#1a2e20;--text2:#4a6352;--text3:#7a9882;--border:rgba(50,100,60,0.14);--shadow:0 4px 20px rgba(50,100,60,0.10)}
-body.nordic{--bg:#eef2f5;--bg2:#e0e8ef;--bg3:#d2dfe9;--card:#f5f8fb;--card2:#dce7f0;--accent:#3a6b9a;--accent2:#2a5278;--accent3:#5b9ec9;--green:#3a7d6e;--yellow:#c4892a;--red:#b84040;--text:#182435;--text2:#4a6278;--text3:#7a96ae;--border:rgba(50,80,120,0.13);--shadow:0 4px 20px rgba(50,80,120,0.10)}
-body.terracotta{--bg:#f7f0eb;--bg2:#ede4db;--bg3:#e0d4c7;--card:#fcf8f4;--card2:#e8ddd3;--accent:#b85c38;--accent2:#8f3e22;--accent3:#c4922a;--green:#5a7a50;--yellow:#c4922a;--red:#9e2a2a;--text:#2e1a10;--text2:#7a4a30;--text3:#a87a60;--border:rgba(120,70,40,0.14);--shadow:0 4px 20px rgba(120,70,40,0.12)}
-
-/* ── NUOVI TEMI ── */
-body.rosa{--bg:#fdf0f0;--bg2:#f5e4e4;--bg3:#ecdada;--card:#fdf8f8;--card2:#f5eaea;--accent:#b85c7a;--accent2:#8f3a58;--accent3:#7a9870;--green:#7a9870;--yellow:#c4922a;--red:#b84040;--text:#2e1020;--text2:#7a4060;--text3:#a87090;--border:rgba(184,92,122,0.15);--shadow:0 4px 20px rgba(184,92,122,0.12)}
-body.lavanda{--bg:#f3f0fa;--bg2:#e8e2f5;--bg3:#ddd5f0;--card:#faf8fd;--card2:#ede8f8;--accent:#7a5cb8;--accent2:#5a3a98;--accent3:#5e8a70;--green:#5e8a70;--yellow:#c4922a;--red:#b84040;--text:#1a1030;--text2:#5a4880;--text3:#8a78b0;--border:rgba(122,92,184,0.15);--shadow:0 4px 20px rgba(122,92,184,0.12)}
-body.pesca{--bg:#fdf4ec;--bg2:#f5e8d8;--bg3:#eddcc8;--card:#fdfaf6;--card2:#f5ece0;--accent:#d4804a;--accent2:#a85c28;--accent3:#6a9060;--green:#6a9060;--yellow:#c4922a;--red:#b84040;--text:#2e1800;--text2:#7a4820;--text3:#a87850;--border:rgba(212,128,74,0.15);--shadow:0 4px 20px rgba(212,128,74,0.12)}
-body.menta{--bg:#fdfaf0;--bg2:#f5f0e0;--bg3:#ebe6d0;--card:#fffdf8;--card2:#f5f2e4;--accent:#5a9060;--accent2:#3a7040;--accent3:#c8d89a;--green:#5a9060;--yellow:#d4922a;--red:#b84040;--text:#1a2010;--text2:#4a6040;--text3:#7a9060;--border:rgba(90,144,96,0.15);--shadow:0 4px 20px rgba(90,144,96,0.12)}
-body.cielo{--bg:#f0f6fc;--bg2:#e0ecf8;--bg3:#d0e2f4;--card:#f8fbfe;--card2:#e4eef8;--accent:#4a8ab8;--accent2:#2a6a98;--accent3:#5a9870;--green:#5a9870;--yellow:#f0c870;--red:#b84040;--text:#102030;--text2:#3a6080;--text3:#6a90b0;--border:rgba(74,138,184,0.15);--shadow:0 4px 20px rgba(74,138,184,0.12)}
-body.acqua{--bg:#e8f8fc;--bg2:#d5eff7;--bg3:#c0e5f0;--card:#f4fcfe;--card2:#daf2f8;--accent:#0a8ab0;--accent2:#006a90;--accent3:#40c0e0;--green:#3aaa6a;--yellow:#e0a030;--red:#c04040;--text:#041820;--text2:#205878;--text3:#5090a8;--border:rgba(10,138,176,0.15);--shadow:0 4px 20px rgba(10,138,176,0.12)}
-body.perla{--bg:#f4f4f6;--bg2:#e8e8ee;--bg3:#dcdce6;--card:#fafafa;--card2:#eeeef4;--accent:#6a6a8a;--accent2:#4a4a6a;--accent3:#4a8a6a;--green:#4a8a6a;--yellow:#c4922a;--red:#b84040;--text:#181820;--text2:#4a4a60;--text3:#7a7a98;--border:rgba(106,106,138,0.14);--shadow:0 4px 20px rgba(106,106,138,0.10)}
-body.foresta{--bg:#252e28;--bg2:#2e3a30;--bg3:#384538;--card:#2e3a30;--card2:#384838;--accent:#5aaa70;--accent2:#3a8850;--accent3:#80c890;--green:#5aaa70;--yellow:#e0a060;--red:#e06060;--text:#d8f0d8;--text2:#98b898;--text3:#688068;--border:rgba(255,255,255,0.10);--shadow:0 4px 24px rgba(0,0,0,0.25)}
-body.bluNotte{--bg:#28303e;--bg2:#303a4a;--bg3:#384455;--card:#303a4a;--card2:#3a4558;--accent:#4a7ad4;--accent2:#2a5ab4;--accent3:#60d0a0;--green:#60d0a0;--yellow:#f0c060;--red:#e06060;--text:#d8e4f8;--text2:#90a8cc;--text3:#607898;--border:rgba(255,255,255,0.10);--shadow:0 4px 24px rgba(0,0,0,0.25)}
-body.bordeaux{--bg:#332028;--bg2:#3e2832;--bg3:#4a303c;--card:#3e2832;--card2:#4a323e;--accent:#c05070;--accent2:#a03050;--accent3:#d4a060;--green:#80b870;--yellow:#d4a060;--red:#e06060;--text:#f0d8e0;--text2:#c09898;--text3:#907070;--border:rgba(255,255,255,0.10);--shadow:0 4px 24px rgba(0,0,0,0.25)}
-body.notte{--bg:#2a2d35;--bg2:#32363f;--bg3:#3a3f4a;--card:#32363f;--card2:#3c4150;--accent:#d4a96a;--accent2:#c4854a;--accent3:#6aab8a;--green:#6aab8a;--yellow:#d4a96a;--red:#e06060;--text:#eae6de;--text2:#a0998e;--text3:#706860;--border:rgba(255,255,255,0.10);--shadow:0 4px 24px rgba(0,0,0,0.25)}
-
-body{background:var(--bg);color:var(--text)}
-
-/* ── LAYOUT ── */
-header{position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:var(--bg);border-bottom:1px solid var(--border);backdrop-filter:blur(20px)}
-.logo{display:flex;align-items:center;gap:10px}
-.logo-icon{width:38px;height:38px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:19px;background:linear-gradient(135deg,var(--accent),var(--accent2));box-shadow:0 3px 12px rgba(0,0,0,.15)}
-.logo h1{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;color:var(--accent2)}
-.hdr-btns{display:flex;gap:8px}
-.ibtn{width:38px;height:38px;border-radius:10px;border:1px solid var(--border);background:var(--card);color:var(--text);font-size:17px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s}
-.ibtn.on{background:linear-gradient(135deg,var(--accent),var(--accent2));border-color:transparent;color:#fff}
-
-nav{position:fixed;bottom:0;left:0;right:0;z-index:100;background:var(--bg2);border-top:1px solid var(--border);display:flex;padding:6px 0 max(6px,env(safe-area-inset-bottom));backdrop-filter:blur(20px)}
-.ni{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;padding:5px 2px;border:none;background:none;color:var(--text3);font-size:.6rem;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all .2s}
-.ni .ico{font-size:20px;transition:transform .2s}
-.ni.on{color:var(--accent2)}
-.ni.on .ico{transform:translateY(-2px)}
-.nadd{flex:1;display:flex;align-items:center;justify-content:center;border:none;background:none;cursor:pointer;margin-top:-20px}
-.nadd-c{width:52px;height:52px;border-radius:50%;color:#fff;font-size:26px;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,var(--accent),var(--accent2));box-shadow:0 4px 18px rgba(0,0,0,.2);transition:all .2s}
-.nadd:active .nadd-c{transform:scale(.92)}
-
-main{position:relative;z-index:1;padding:14px 15px 88px;max-width:720px;margin:0 auto}
-.section{display:none;animation:fadeIn .25s ease}
-.section.active{display:block}
-@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
-
-/* ── CARDS ── */
-.card{background:var(--card);border-radius:18px;border:1px solid var(--border);box-shadow:var(--shadow)}
-.card2{background:var(--card2);border-radius:12px;border:1px solid var(--border)}
-
-/* ── STATS ── */
-.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-bottom:18px}
-.stat{background:var(--card);border-radius:12px;border:1px solid var(--border);box-shadow:var(--shadow);padding:13px 8px;text-align:center}
-.stat-n{font-family:'Playfair Display',serif;font-size:1.9rem;font-weight:900;line-height:1}
-.c-green{color:var(--green)}.c-yellow{color:var(--yellow)}.c-red{color:var(--red)}
-.stat-l{color:var(--text2);font-size:.68rem;margin-top:3px}
-
-/* ── SECTION TITLE ── */
-.sec-title{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;color:var(--accent2);margin-bottom:11px;display:flex;align-items:center;gap:8px}
-.sec-title::after{content:'';flex:1;height:1px;background:var(--border)}
-
-/* ── PRODUCT CARD ── */
-.prod-list{display:flex;flex-direction:column;gap:9px}
-.prod-card{background:var(--card);border-radius:18px;border:1px solid var(--border);box-shadow:var(--shadow);padding:13px 15px;display:flex;align-items:center;gap:13px;cursor:pointer;transition:all .18s;position:relative;overflow:hidden}
-.prod-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--accent3)}
-.prod-card.soon::before{background:var(--yellow)}
-.prod-card.critical::before{background:var(--red)}
-.prod-card:active{transform:scale(.98)}
-.prod-emoji{font-size:28px;width:42px;text-align:center;flex-shrink:0}
-.prod-info{flex:1;min-width:0}
-.prod-name{font-weight:600;font-size:.95rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.prod-meta{color:var(--text2);font-size:.73rem;margin-top:3px;display:flex;gap:6px;flex-wrap:wrap}
-.badge{display:inline-flex;align-items:center;background:var(--bg3);border-radius:6px;padding:2px 7px;font-size:.7rem;border:1px solid var(--border)}
-.prod-right{text-align:right;flex-shrink:0}
-.prod-qty{font-family:'Playfair Display',serif;font-size:1.25rem;font-weight:700;color:var(--accent)}
-.prod-exp{font-size:.7rem;color:var(--text2);margin-top:2px}
-.prod-exp.red{color:var(--red);font-weight:600}
-.prod-exp.yellow{color:var(--yellow);font-weight:600}
-
-/* ── EMPTY ── */
-.empty{text-align:center;padding:36px 20px;color:var(--text3)}
-.empty-ico{font-size:46px;margin-bottom:11px}
-
-/* ── ALERT ── */
-.alert-card{background:linear-gradient(135deg,rgba(184,76,58,.10),rgba(184,76,58,.04));border:1px solid rgba(184,76,58,.25);border-radius:12px;padding:11px 13px;margin-bottom:8px;display:flex;align-items:center;gap:11px;cursor:pointer}
-.alert-days{font-size:.76rem;font-weight:700;padding:4px 10px;border-radius:20px;white-space:nowrap}
-.alert-days.red{background:rgba(184,76,58,.15);color:var(--red)}
-.alert-days.yellow{background:rgba(196,146,42,.15);color:var(--yellow)}
-
-/* ── FORM ── */
-.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:11px}
-.fg{display:flex;flex-direction:column;gap:4px}
-.fg.full{grid-column:1/-1}
-.flabel{font-size:.76rem;color:var(--text2);font-weight:500}
-input,select,textarea{width:100%;background:var(--card);border:1px solid var(--border);border-radius:12px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:.93rem;padding:10px 13px;outline:none;transition:border .2s}
-input:focus,select:focus{border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 15%,transparent)}
-input[type=date]::-webkit-calendar-picker-indicator{opacity:.5;cursor:pointer}
-select option{background:var(--bg2)}
-.vrow{display:flex;gap:7px}
-.vrow input,.vrow select{flex:1}
-.vbtn{width:42px;height:42px;border-radius:12px;border:1px solid var(--border);background:var(--card2);color:var(--text);font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .2s}
-.vbtn.listening{background:linear-gradient(135deg,var(--red),var(--accent2));border-color:transparent;animation:pulse 1s infinite}
-@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(184,76,58,.4)}50%{box-shadow:0 0 0 8px transparent}}
-
-.qty-ctrl{display:flex;align-items:center;background:var(--card2);border-radius:12px;border:1px solid var(--border);overflow:hidden;height:42px}
-.card-qty-btns{display:flex;gap:6px;margin-top:5px}
-.card-qty-btn{width:30px;height:30px;border-radius:9px;border:1px solid var(--border);background:var(--bg3);color:var(--accent);font-size:17px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;line-height:1;padding:0}
-.card-qty-btn:active{transform:scale(.92);background:var(--card2)}
-.qty-btn{width:36px;height:100%;background:none;border:none;color:var(--accent);font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center}
-.qty-inp{flex:1;text-align:center;font-weight:700;font-size:1rem;background:none;border:none;color:var(--text);padding:0;outline:none;font-family:'DM Sans',sans-serif}
-
-/* ── LOCATION PICKER ── */
-.loc-picker{background:var(--bg2);border-radius:12px;border:1px solid var(--border);overflow:hidden}
-.loc-step{padding:10px 12px;border-bottom:1px solid var(--border)}
-.loc-step:last-child{border-bottom:none}
-.loc-opts{display:flex;flex-wrap:wrap;gap:6px;margin-top:5px}
-.loc-opt{padding:6px 12px;border-radius:20px;font-size:.8rem;cursor:pointer;background:var(--card);border:1px solid var(--border);color:var(--text2);transition:all .15s;white-space:nowrap}
-.loc-opt.sel{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;border-color:transparent;font-weight:600}
-
-/* ── BUTTONS ── */
-.btn-p{width:100%;padding:13px;border-radius:12px;border:none;color:#fff;font-family:'DM Sans',sans-serif;font-size:.98rem;font-weight:600;cursor:pointer;background:linear-gradient(135deg,var(--accent),var(--accent2));box-shadow:0 4px 16px rgba(0,0,0,.15);transition:all .2s;margin-top:5px}
-.btn-p:active{transform:scale(.97)}
-.btn-s{padding:10px 18px;border-radius:12px;border:1px solid var(--border);background:var(--card2);color:var(--text);font-family:'DM Sans',sans-serif;font-size:.88rem;cursor:pointer}
-.btn-d{padding:10px 18px;border-radius:12px;border:1px solid rgba(184,76,58,.3);background:rgba(184,76,58,.12);color:var(--red);font-family:'DM Sans',sans-serif;font-size:.88rem;cursor:pointer}
-.btn-sm{padding:6px 12px;border-radius:8px;border:1px solid var(--border);background:var(--card2);color:var(--text2);font-family:'DM Sans',sans-serif;font-size:.78rem;cursor:pointer}
-
-/* ── CHIPS ── */
-.chips{display:flex;gap:7px;overflow-x:auto;padding-bottom:4px;margin-bottom:13px;scrollbar-width:none}
-.chips::-webkit-scrollbar{display:none}
-.chip{flex-shrink:0;padding:6px 13px;border-radius:20px;background:var(--card);border:1px solid var(--border);color:var(--text2);font-size:.78rem;cursor:pointer;white-space:nowrap;font-family:'DM Sans',sans-serif}
-.chip.on{background:linear-gradient(135deg,var(--accent),var(--accent2));border-color:transparent;color:#fff}
-
-/* ── SEARCH ── */
-.srch-row{display:flex;gap:8px;margin-bottom:14px}
-.srch-wrap{position:relative;flex:1}
-.srch-ico{position:absolute;left:11px;top:50%;transform:translateY(-50%);font-size:15px;color:var(--text3)}
-.srch-wrap input{padding-left:36px}
-
-/* ── MODAL / OVERLAY ── */
-.overlay{position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.4);backdrop-filter:blur(6px);display:none;align-items:flex-end;justify-content:center}
-.overlay.open{display:flex}
-.modal{background:var(--bg2);border-radius:24px 24px 0 0;width:100%;max-width:720px;padding:22px 22px max(22px,env(safe-area-inset-bottom));border-top:1px solid var(--border);max-height:92vh;overflow-y:auto;animation:slideUp .3s cubic-bezier(.34,1.56,.64,1)}
-@keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
-.modal-handle{width:34px;height:4px;background:var(--border);border-radius:2px;margin:0 auto 18px}
-.modal-det{background:var(--card);border-radius:12px;border:1px solid var(--border);padding:13px;display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:15px}
-.det-label{font-size:.7rem;color:var(--text3);text-transform:uppercase;letter-spacing:.5px}
-.det-val{font-weight:600;font-size:.92rem;margin-top:2px}
-.mact{display:flex;gap:9px}
-.mact button{flex:1}
-
-/* ── CATEGORIE ── */
-.cat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}
-.cat-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:13px 9px;text-align:center;cursor:pointer;transition:all .18s;box-shadow:var(--shadow)}
-.cat-card:active{transform:scale(.95)}
-.cat-card.on{border-color:var(--accent);border-width:2px}
-
-/* ── RAPID ── */
-.rapid-hdr{border-radius:16px;padding:16px 18px;margin-bottom:14px;color:#fff;position:relative;overflow:hidden;background:linear-gradient(135deg,var(--accent),var(--accent2))}
-.rapid-hdr::before{content:'⚡';position:absolute;right:14px;top:50%;transform:translateY(-50%);font-size:48px;opacity:.15}
-.rplace-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px}
-.rplace-card{background:var(--card);border:2px solid var(--border);border-radius:16px;padding:16px 12px;text-align:center;cursor:pointer;transition:all .2s;box-shadow:var(--shadow)}
-.rplace-card:active{transform:scale(.96)}
-.rplace-card.on{border-color:var(--accent)}
-.rrip-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:16px}
-.rrip-card{background:var(--card);border:2px solid var(--border);border-radius:12px;padding:12px 8px;text-align:center;cursor:pointer;transition:all .18s}
-.rrip-card.on{border-color:var(--accent);background:var(--card2)}
-.rrip-card:active{transform:scale(.94)}
-.rrip-num{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;color:var(--accent)}
-
-/* ── STEP DOTS ── */
-.step-row{display:flex;align-items:center;gap:6px;margin-bottom:16px}
-.sdot{width:8px;height:8px;border-radius:50%;background:var(--border);transition:all .2s}
-.sdot.active{background:var(--accent);width:22px;border-radius:4px}
-.sdot.done{background:var(--green)}
-
-/* ── ADDED ITEM ── */
-.added-item{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:10px 13px;display:flex;align-items:center;gap:10px;margin-bottom:7px;animation:fadeIn .2s ease}
-
-/* ── SETTINGS ── */
-.stg-hdr{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;cursor:pointer;user-select:none;background:var(--card);border:1px solid var(--border);box-shadow:var(--shadow);border-radius:14px;margin-bottom:8px;transition:border-radius .2s}
-.stg-hdr.open{border-radius:14px 14px 0 0;margin-bottom:0}
-.stg-body{background:var(--bg2);border:1px solid var(--border);border-top:none;border-radius:0 0 14px 14px;padding:16px 14px;margin-bottom:8px;display:none}
-.stg-body.open{display:block}
-.stg-arr{color:var(--text3);font-size:20px;transition:transform .25s}
-.stg-arr.open{transform:rotate(90deg)}
-.theme-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}
-.theme-opt{border-radius:12px;padding:14px 12px;cursor:pointer;border:2px solid transparent;transition:all .2s;position:relative}
-.theme-opt.on{border-color:var(--accent)}
-.theme-dots{display:flex;gap:4px;margin-top:8px}
-.theme-dot{width:16px;height:16px;border-radius:50%}
-.luogo-item{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:12px 14px;margin-bottom:8px}
-.rip-tag{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:12px;font-size:.72rem;background:var(--bg3);border:1px solid var(--border);color:var(--text2);margin:2px}
-.rip-tag button{background:none;border:none;color:var(--text3);cursor:pointer;font-size:12px}
-
-/* ── SPESA ── */
-.spesa-item{border-radius:14px;padding:13px 15px;display:flex;align-items:center;gap:12px;margin-bottom:8px;transition:all .2s;border:1px solid var(--border)}
-.spesa-item.pending{background:var(--card);box-shadow:var(--shadow)}
-.spesa-item.bought{background:var(--bg3);opacity:.7}
-.spesa-check{width:26px;height:26px;border-radius:50%;border:2px solid var(--border);display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;transition:all .2s;font-size:14px}
-.spesa-check.done{background:var(--green);border-color:var(--green);color:#fff}
-.spesa-lbl{font-size:.72rem;color:var(--text3);text-transform:uppercase;letter-spacing:.8px;margin:14px 0 8px;font-weight:600}
-
-/* ── CONFIRM ── */
-.confirm-overlay{position:fixed;inset:0;z-index:500;background:rgba(0,0,0,.5);backdrop-filter:blur(6px);display:none;align-items:center;justify-content:center;padding:20px}
-.confirm-overlay.open{display:flex}
-.confirm-box{background:var(--card);border-radius:20px;padding:24px 22px;max-width:320px;width:100%;border:1px solid var(--border);box-shadow:var(--shadow)}
-
-/* ── TOAST ── */
-.toast{position:fixed;bottom:92px;left:50%;transform:translateX(-50%);padding:9px 18px;border-radius:30px;font-size:.83rem;font-weight:600;z-index:300;box-shadow:0 4px 18px rgba(0,0,0,.2);white-space:nowrap;pointer-events:none;display:none;animation:fadeIn .25s ease}
-
-/* ── VOICE ── */
-.voice-status{position:fixed;bottom:92px;left:50%;transform:translateX(-50%);background:var(--red);color:#fff;padding:9px 18px;border-radius:30px;font-size:.83rem;font-weight:600;display:none;z-index:150}
-
-/* ── ADD MENU ── */
-.addmenu-btn{padding:16px;font-size:1rem;text-align:left;display:flex;align-items:center;gap:12px;width:100%;border-radius:12px;cursor:pointer;border:none;font-family:'DM Sans',sans-serif;font-weight:600;transition:all .2s;margin-bottom:10px}
-.addmenu-p{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;box-shadow:0 4px 16px rgba(0,0,0,.15)}
-.addmenu-r{background:linear-gradient(135deg,var(--accent3),var(--green));color:#fff;box-shadow:0 4px 16px rgba(0,0,0,.12)}
-
-
-/* ── RICETTE ── */
-.ricette-tabs{display:flex;gap:8px;margin-bottom:18px}
-.ricette-tab{flex:1;padding:10px 6px;border-radius:12px;cursor:pointer;font-family:inherit;font-size:.88rem;font-weight:600;border:1px solid var(--border);background:var(--card);color:var(--text2);transition:all .2s}
-.ricette-tab.on{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;border-color:transparent}
-.ricetta-card{background:var(--card);border-radius:18px;border:1px solid var(--border);box-shadow:var(--shadow);padding:18px;margin-bottom:14px}
-.ricetta-title{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;color:var(--accent2);margin-bottom:12px}
-.ricetta-ingredienti{margin-bottom:12px}
-.ricetta-ing-label{font-size:.75rem;color:var(--text3);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;font-weight:600}
-.ricetta-ing-list{display:flex;flex-wrap:wrap;gap:6px}
-.ricetta-step{display:flex;gap:10px;margin-bottom:8px;align-items:flex-start}
-.ricetta-step-num{width:24px;height:24px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;font-size:.75rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
-.ricetta-step-txt{font-size:.88rem;color:var(--text);line-height:1.5}
-.menu-card{background:var(--card);border-radius:14px;border:1px solid var(--border);box-shadow:var(--shadow);margin-bottom:10px;overflow:hidden}
-.menu-day-hdr{padding:14px 16px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;user-select:none}
-.menu-day-name{font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;color:var(--accent2)}
-.menu-day-kcal{font-size:.78rem;color:var(--text2);background:var(--bg3);padding:3px 10px;border-radius:12px}
-.menu-day-body{padding:0 16px 14px;display:none;border-top:1px solid var(--border)}
-.menu-day-body.open{display:block}
-.menu-pasto{padding:10px 0;border-bottom:1px solid var(--border)}
-.menu-pasto:last-child{border-bottom:none}
-.menu-pasto-label{font-size:.7rem;color:var(--text3);text-transform:uppercase;letter-spacing:.5px;font-weight:600;margin-bottom:3px}
-.menu-pasto-txt{font-size:.88rem;color:var(--text);line-height:1.4}
-.ai-loading{text-align:center;padding:40px 20px;color:var(--text2)}
-.ai-loading-ico{font-size:40px;margin-bottom:12px;animation:spin 1.5s linear infinite}
-@keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
-.ai-error{background:rgba(184,76,58,.1);border:1px solid rgba(184,76,58,.3);border-radius:12px;padding:14px;color:var(--red);font-size:.88rem;margin-bottom:14px}
-.ingredienti-opt{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap}
-.ingredienti-opt .chip{cursor:pointer}
-@media print{
-  .section{display:block!important}
-  #sec-ricette{display:block!important}
-  body{background:#fff!important;color:#000!important}
-  .ricetta-card,.menu-card{box-shadow:none!important;border:1px solid #ccc!important;break-inside:avoid}
-  .menu-day-body{display:block!important}
-}
-
-/* ── BARCODE SCANNER ── */
-.scanner-overlay{position:fixed;inset:0;z-index:300;background:#000;display:none;flex-direction:column;align-items:center;justify-content:center}
-.scanner-overlay.open{display:flex}
-.scanner-video{width:100%;max-width:500px;border-radius:0}
-.scanner-frame{position:absolute;width:260px;height:120px;border:3px solid var(--accent);border-radius:8px;box-shadow:0 0 0 2000px rgba(0,0,0,0.55)}
-.scanner-line{position:absolute;top:0;left:0;right:0;height:2px;background:var(--accent);animation:scanLine 1.8s ease-in-out infinite}
-@keyframes scanLine{0%{top:0}50%{top:calc(100% - 2px)}100%{top:0}}
-.scanner-hint{color:#fff;font-size:.88rem;margin-top:24px;opacity:.8;text-align:center;padding:0 20px}
-.scanner-close{position:absolute;top:20px;right:20px;background:rgba(255,255,255,0.15);border:none;color:#fff;width:40px;height:40px;border-radius:50%;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center}
-.scanner-status{position:absolute;bottom:60px;background:rgba(0,0,0,0.7);color:#fff;padding:10px 20px;border-radius:20px;font-size:.85rem;text-align:center}
-
-/* ── POPUP NUTRIZIONE ── */
-.nutr-popup-overlay{position:fixed;inset:0;z-index:400;background:rgba(0,0,0,.45);backdrop-filter:blur(6px);display:none;align-items:flex-end;justify-content:center}
-.nutr-popup-overlay.open{display:flex}
-.nutr-popup{background:var(--bg2);border-radius:24px 24px 0 0;width:100%;max-width:720px;padding:22px 20px max(22px,env(safe-area-inset-bottom));border-top:1px solid var(--border);max-height:80vh;overflow-y:auto;animation:slideUp .3s cubic-bezier(.34,1.56,.64,1)}
-.nutr-result{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:12px 14px;margin-bottom:8px;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:12px}
-.nutr-result:active{transform:scale(.98)}
-.nutr-result.selected{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 8%,var(--card))}
-.nutr-vals{font-size:.72rem;color:var(--text2);margin-top:3px;display:flex;gap:8px;flex-wrap:wrap}
-.nutr-val-badge{background:var(--bg3);border-radius:6px;padding:2px 6px;border:1px solid var(--border)}
-.btn-p:disabled{opacity:.45;cursor:not-allowed}
-
-/* ── SPLASH SCREEN ── */
-#splashScreen {
-  position:fixed; inset:0; z-index:9999;
-  background:#f5efe0;
-  display:flex; flex-direction:column;
-  align-items:center; justify-content:center;
-  padding:16px; overflow:hidden;
-  animation:splashFadeIn .7s ease forwards;
-  transition:opacity .8s ease, transform 1.2s ease;
-}
-#splashScreen.hiding {
-  opacity:0;
-  transform:scale(.88);
-  pointer-events:none;
-}
-@keyframes splashFadeIn {
-  from{opacity:0;transform:scale(1.04)}
-  to{opacity:1;transform:scale(1)}
-}
-
-/* Immagine */
-.splash-img-wrap {
-  position:relative; width:100%; max-width:460px; z-index:2;
-}
-.splash-img-wrap img {
-  width:100%; height:auto; max-height:75vh;
-  object-fit:contain; display:block;
-}
-
-/* Luce dorata che scorre (effetto 4) */
-.splash-img-wrap::after {
-  content:'';
-  position:absolute; inset:0;
-  background:linear-gradient(115deg,
-    transparent 0%,
-    transparent 30%,
-    rgba(255,220,100,0.35) 50%,
-    transparent 70%,
-    transparent 100%);
-  background-size:200% 100%;
-  animation:goldenLight 3s ease-in-out infinite;
-  pointer-events:none; border-radius:8px;
-}
-@keyframes goldenLight {
-  0%   {background-position:200% 0}
-  50%  {background-position:0% 0}
-  100% {background-position:-200% 0}
-}
-
-/* Versione */
-.splash-version {
-  position:absolute; bottom:9%; left:50%;
-  transform:translateX(-50%);
-  font-family:'Playfair Display',serif;
-  font-size:1rem; font-weight:700;
-  color:#5a3e28; letter-spacing:2px;
-  text-transform:uppercase; pointer-events:none;
-  z-index:3;
-}
-
-/* Barra caricamento vintage (effetto 8) */
-.splash-loader {
-  width:180px; height:3px;
-  background:rgba(90,62,40,0.15);
-  border-radius:2px; margin-top:16px;
-  position:relative; overflow:hidden; z-index:2;
-}
-.splash-loader::after {
-  content:'';
-  position:absolute; left:-100%; top:0;
-  width:100%; height:100%;
-  background:linear-gradient(90deg, transparent, #8a7a5a, #c4922a, #8a7a5a, transparent);
-  animation:loaderFill 4s ease forwards;
-}
-@keyframes loaderFill {
-  0%  {left:-100%}
-  100%{left:0%}
-}
-
-/* Effetto seppia → colori (effetto 5) */
-@keyframes desepia {
-  0%   { filter: sepia(1) brightness(.85) contrast(1.1); }
-  60%  { filter: sepia(.4) brightness(.95) contrast(1.05); }
-  100% { filter: sepia(0) brightness(1) contrast(1); }
-}
-.splash-img-wrap img {
-  animation: desepia 2.8s ease forwards !important;
-}
-
-/* ── SPOSTA IN BLOCCO ── */
-.bulk-mode .prod-card { cursor:pointer; }
-.bulk-mode .prod-card::after {
-  content:'○'; position:absolute; right:12px; top:50%;
-  transform:translateY(-50%); font-size:20px;
-  color:var(--text3); pointer-events:none;
-}
-.bulk-mode .prod-card.bulk-selected::after { content:'✅'; }
-.bulk-mode .prod-card.bulk-selected { border-color:var(--accent); background:color-mix(in srgb,var(--accent) 8%,var(--card)); }
-.bulk-bar {
-  position:fixed; bottom:72px; left:0; right:0; z-index:110;
-  background:linear-gradient(135deg,var(--accent),var(--accent2));
-  color:#fff; padding:12px 16px;
-  display:none; align-items:center; justify-content:space-between;
-  box-shadow:0 -4px 20px rgba(0,0,0,.15);
-}
-.bulk-bar.open { display:flex; }
-.bulk-bar-info { font-weight:600; font-size:.9rem; }
-.bulk-bar-info span { font-family:'Playfair Display',serif; font-size:1.1rem; }
-.bulk-bar-btns { display:flex; gap:8px; }
-.bulk-btn { padding:7px 14px; border-radius:8px; border:none; cursor:pointer;
-  font-family:'DM Sans',sans-serif; font-size:.82rem; font-weight:600; }
-.bulk-btn-move { background:#fff; color:var(--accent2); }
-.bulk-btn-cancel { background:rgba(255,255,255,.2); color:#fff; }
-::-webkit-scrollbar{width:4px}
-::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
-
-@media(min-width:560px){.cat-grid{grid-template-columns:repeat(4,1fr)}.theme-grid{grid-template-columns:repeat(3,1fr)}.form-grid{grid-template-columns:1fr 1fr 1fr}.rplace-grid{grid-template-columns:repeat(3,1fr)}}
-
-/* ── ARMADIETTO EXTRA ── */
-.scad-badge{font-size:.68rem;padding:2px 8px;border-radius:8px;font-weight:600;white-space:nowrap}
-.scad-ok{background:color-mix(in srgb,var(--green) 14%,transparent);color:var(--green);border:1px solid var(--green)}
-.scad-warn{background:color-mix(in srgb,var(--yellow) 16%,transparent);color:var(--yellow);border:1px solid var(--yellow)}
-.scad-exp{background:color-mix(in srgb,var(--red) 14%,transparent);color:var(--red);border:1px solid var(--red)}
-.card-qty-btns{display:flex;gap:6px;margin-top:5px}
-.card-qty-btn{width:30px;height:30px;border-radius:9px;border:1px solid var(--border);background:var(--bg3);color:var(--accent);font-size:17px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;line-height:1;padding:0}
-.card-qty-btn:active{transform:scale(.92);background:var(--card2)}
+body{font-family:'DM Sans',sans-serif;min-height:100vh;overflow-x:hidden;background:var(--bg);color:var(--text)}
+body.nordic{--bg:#edf4f8;--bg2:#dfeaf2;--bg3:#d5e3ed;--card:#f8fbfd;--card2:#e8f0f6;--accent:#7246c8;--accent2:#24567d;--accent3:#8e72d8;--green:#3e8f68;--yellow:#d6a72c;--red:#e6483f;--text:#24394c;--text2:#52697d;--text3:#8197aa;--border:rgba(57,91,117,.16);--shadow:0 5px 20px rgba(59,82,103,.09)}
+body.salvia{--bg:#eef3ee;--bg2:#e2ece2;--bg3:#d5e4d5;--card:#f6faf6;--card2:#dfeadf;--accent:#4a7c59;--accent2:#346045;--accent3:#7aaa8a;--green:#4a7c59;--yellow:#c4922a;--red:#c0412e;--text:#1a2e20;--text2:#4a6352;--text3:#7a9882;--border:rgba(50,100,60,.14);--shadow:0 4px 20px rgba(50,100,60,.10)}
+body.lavanda{--bg:#f3f0fa;--bg2:#e8e2f5;--bg3:#ddd5f0;--card:#faf8fd;--card2:#ede8f8;--accent:#7a5cb8;--accent2:#5a3a98;--accent3:#5e8a70;--green:#5e8a70;--yellow:#c4922a;--red:#b84040;--text:#1a1030;--text2:#5a4880;--text3:#8a78b0;--border:rgba(122,92,184,.15);--shadow:0 4px 20px rgba(122,92,184,.12)}
+body.cielo{--bg:#f0f6fc;--bg2:#e0ecf8;--bg3:#d0e2f4;--card:#f8fbfe;--card2:#e4eef8;--accent:#4a8ab8;--accent2:#2a6a98;--accent3:#5a9870;--green:#5a9870;--yellow:#f0c870;--red:#b84040;--text:#102030;--text2:#3a6080;--text3:#6a90b0;--border:rgba(74,138,184,.15);--shadow:0 4px 20px rgba(74,138,184,.12)}
+header{position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:center;padding:15px 16px;background:var(--bg2);border-bottom:1px solid var(--border)}
+.logo-icon{position:absolute;left:16px;font-size:29px;color:var(--accent)}
+header h1{font-family:'Playfair Display',serif;font-size:1.45rem;color:var(--accent2)}
+.version{font-size:.67rem;color:var(--text3);text-align:center}
+.ibtn{position:absolute;right:14px;width:40px;height:40px;border:0;background:transparent;font-size:22px;cursor:pointer}
+main{padding:14px 15px 94px;max-width:720px;margin:auto}.section{display:none}.section.active{display:block}
+.card{background:var(--card);border:1px solid var(--border);border-radius:18px;box-shadow:var(--shadow)}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin-bottom:18px}.stat{min-height:118px;padding:13px 8px;text-align:center;display:flex;flex-direction:column;justify-content:center}.stat-ico{font-size:26px}.stat-n{font-family:'Playfair Display',serif;font-size:1.9rem;font-weight:900;color:var(--accent2)}.stat-l{font-size:.72rem;color:var(--text2)}
+.sec-title{font-family:'Playfair Display',serif;font-size:1.07rem;color:var(--accent2);font-weight:700;margin:17px 0 10px;display:flex;align-items:center;gap:8px}.sec-title:after{content:'';flex:1;height:1px;background:var(--border)}
+.prod-list{display:flex;flex-direction:column;gap:9px}.prod{padding:13px 14px;display:flex;align-items:center;gap:11px}.prod.click{cursor:pointer}.pill{width:40px;height:40px;border-radius:12px;background:var(--card2);display:flex;align-items:center;justify-content:center;font-size:20px}.prod-main{flex:1;min-width:0}.prod-name{font-size:.95rem;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.meta{font-size:.74rem;color:var(--text2);margin-top:3px}.badge{display:inline-block;margin-top:6px;padding:4px 8px;border-radius:999px;background:var(--card2);color:var(--accent2);font-size:.68rem;font-weight:700}.qty{font-size:.72rem;color:var(--text3);text-align:right}.warn{color:var(--yellow)}.bad{color:var(--red)}
+.chips{display:flex;gap:8px;overflow:auto;padding-bottom:4px}.chip{border:1px solid var(--border);background:var(--card);color:var(--text2);border-radius:999px;padding:8px 12px;font:600 .78rem 'DM Sans';white-space:nowrap}.chip.on{background:linear-gradient(135deg,var(--accent),var(--accent2));color:white;border-color:transparent}
+.toolbar{display:flex;gap:8px;margin:10px 0}.toolbar input{flex:1}.seg{display:flex;border:1px solid var(--border);border-radius:11px;overflow:hidden;background:var(--card)}.seg button{border:0;background:transparent;padding:9px 11px;color:var(--text2);font-weight:700}.seg button.on{background:var(--card2);color:var(--accent2)}
+input,select,textarea{width:100%;border:1px solid var(--border);background:var(--card);color:var(--text);border-radius:11px;padding:11px 12px;font:inherit;outline:none}textarea{min-height:78px;resize:vertical}.fg{margin-bottom:12px}.flabel{display:block;font-size:.72rem;color:var(--text2);font-weight:700;margin-bottom:6px}.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.btn-p,.btn-s,.btn-d{border-radius:11px;padding:11px 13px;font-weight:700;font-family:inherit;cursor:pointer}.btn-p{border:0;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff}.btn-s{border:1px solid var(--border);background:var(--card);color:var(--text)}.btn-d{border:1px solid rgba(230,72,63,.25);background:rgba(230,72,63,.08);color:var(--red)}
+.lookup{padding:11px 12px;background:var(--card2);border:1px solid var(--border);border-radius:12px;margin-top:7px}.lookup strong{color:var(--accent2)}.small{font-size:.72rem;color:var(--text3);margin-top:4px}.ok{color:var(--green);font-weight:700}
+.acc{margin-bottom:9px;overflow:hidden}.acc-h{padding:12px 14px;display:flex;align-items:center;gap:9px;cursor:pointer}.acc-t{font-weight:700;color:var(--accent2);flex:1}.acc-b{display:none;padding:0 10px 10px}.acc.open .acc-b{display:block}.acc.open .chev{transform:rotate(90deg)}.avatar{width:42px;height:42px;border-radius:50%;background:var(--card2);display:flex;align-items:center;justify-content:center}
+.note{padding:12px 14px;background:var(--card2);border-radius:12px;color:var(--text2);font-size:.75rem;line-height:1.45}
+nav{position:fixed;bottom:0;left:0;right:0;z-index:100;display:flex;background:var(--bg2);border-top:1px solid var(--border);padding:7px 0 max(7px,env(safe-area-inset-bottom))}
+.ni{flex:1;text-align:center;color:var(--text3);font-size:.61rem;cursor:pointer;padding:4px 1px}.ni .ico{font-size:23px}.ni.on{color:var(--accent2)}.nadd{margin-top:-18px}.nadd .ico{width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:auto;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;font-size:29px;box-shadow:0 4px 18px rgba(0,0,0,.2)}
+.overlay{position:fixed;inset:0;background:rgba(31,48,64,.38);z-index:300;display:none;align-items:flex-end;justify-content:center}.overlay.show{display:flex}.sheet{width:100%;max-width:720px;max-height:90vh;overflow:auto;background:var(--bg);border-radius:22px 22px 0 0;padding:16px 15px 28px}.sheet-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:13px}.sheet-title{font-family:'Playfair Display',serif;font-size:1.2rem;color:var(--accent2)}.close{width:38px;height:38px;border-radius:50%;border:1px solid var(--border);background:var(--card);font-size:18px}
+.history-day{margin:14px 0 7px;font-size:.76rem;font-weight:700;color:var(--text2)}.history-time{min-width:48px;font-weight:700;color:var(--accent2)}.history-status{margin-left:auto;color:var(--green);font-size:.72rem;font-weight:700}
+.setting{margin-bottom:9px}.st-h{display:flex;align-items:center;justify-content:space-between;padding:14px;background:var(--card);border:1px solid var(--border);border-radius:14px;cursor:pointer}.st-b{display:none;background:var(--bg2);border:1px solid var(--border);border-top:0;border-radius:0 0 14px 14px;padding:14px}.setting.open .st-h{border-radius:14px 14px 0 0}.setting.open .st-b{display:block}.theme-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}.theme{padding:12px;border:1px solid var(--border);border-radius:12px;background:var(--card);cursor:pointer}.theme.on{outline:2px solid var(--accent)}
+.fab-row{display:flex;gap:8px;margin-bottom:12px}.fab-row button{flex:1}.empty{text-align:center;padding:36px 18px;color:var(--text3)}.empty .big{font-size:46px;margin-bottom:8px}
+.toast{position:fixed;left:50%;bottom:91px;transform:translateX(-50%) translateY(30px);opacity:0;z-index:500;background:#20394d;color:#fff;border-radius:12px;padding:10px 14px;font-size:.82rem;transition:.25s;max-width:90%;text-align:center}.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.scan-video{width:100%;aspect-ratio:3/4;object-fit:cover;background:#000;border-radius:14px}
+@media(max-width:430px){.two{grid-template-columns:1fr}header h1{font-size:1.28rem}}
 </style>
 </head>
 <body class="nordic">
-
-<!-- SPLASH -->
-<style>
-#splash .splash-title{color:#1f3a52;text-shadow:0 1px 0 rgba(255,255,255,.6)}
-</style>
-<div id="splash" style="position:fixed;inset:0;z-index:999;background:#e6eef4;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:opacity .6s;overflow:hidden">
-  <svg viewBox="0 0 400 700" preserveAspectRatio="xMidYMid slice" style="position:absolute;inset:0;width:100%;height:100%">
-    <defs>
-      <linearGradient id="bgg" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0" stop-color="#eaf3f7"/><stop offset=".6" stop-color="#d7e8ef"/><stop offset="1" stop-color="#c2d9e4"/>
-      </linearGradient>
-      <linearGradient id="cab" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#eef3f5"/>
-      </linearGradient>
-      <linearGradient id="wood" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0" stop-color="#caa06a"/><stop offset="1" stop-color="#a87c46"/>
-      </linearGradient>
-      <radialGradient id="crossglow" cx=".5" cy=".5" r=".5">
-        <stop offset="0" stop-color="#5dbf7e" stop-opacity=".45"/><stop offset="1" stop-color="#5dbf7e" stop-opacity="0"/>
-      </radialGradient>
-      <linearGradient id="amber" x1="0" y1="0" x2="1" y2="0">
-        <stop offset="0" stop-color="#e8a93c"/><stop offset=".5" stop-color="#f2c46a"/><stop offset="1" stop-color="#d6952a"/>
-      </linearGradient>
-      <linearGradient id="bluv" x1="0" y1="0" x2="1" y2="0">
-        <stop offset="0" stop-color="#5e8fb8"/><stop offset=".5" stop-color="#86b2d4"/><stop offset="1" stop-color="#4d7da6"/>
-      </linearGradient>
-      <linearGradient id="grnv" x1="0" y1="0" x2="1" y2="0">
-        <stop offset="0" stop-color="#6da06a"/><stop offset=".5" stop-color="#92c08e"/><stop offset="1" stop-color="#5a8f57"/>
-      </linearGradient>
-    </defs>
-    <rect width="400" height="700" fill="url(#bgg)"/>
-    <!-- bolle morbide di sfondo -->
-    <circle cx="70" cy="120" r="48" fill="#fff" opacity=".28"/>
-    <circle cx="345" cy="200" r="34" fill="#fff" opacity=".25"/>
-    <circle cx="320" cy="95" r="20" fill="#fff" opacity=".22"/>
-    <circle cx="48" cy="290" r="22" fill="#fff" opacity=".2"/>
-    <circle cx="368" cy="420" r="26" fill="#fff" opacity=".18"/>
-    <!-- crocette decorative -->
-    <g fill="#9fc4b4" opacity=".5">
-      <path d="M 88 215 h 9 v 9 h 9 v 9 h -9 v 9 h -9 v -9 h -9 v -9 h 9 z"/>
-      <path d="M 318 300 h 7 v 7 h 7 v 7 h -7 v 7 h -7 v -7 h -7 v -7 h 7 z"/>
-      <path d="M 60 420 h 6 v 6 h 6 v 6 h -6 v 6 h -6 v -6 h -6 v -6 h 6 z"/>
-    </g>
-    <!-- alone croce verde -->
-    <circle cx="200" cy="318" r="118" fill="url(#crossglow)"/>
-    <!-- ombra a terra -->
-    <ellipse cx="200" cy="592" rx="168" ry="13" fill="#7e9aac" opacity=".3"/>
-    <!-- armadietto -->
-    <g>
-      <rect x="92" y="252" width="216" height="332" rx="16" fill="url(#cab)" stroke="#c2d2da" stroke-width="2.5"/>
-      <rect x="92" y="252" width="216" height="20" rx="10" fill="url(#wood)"/>
-      <rect x="92" y="568" width="216" height="16" rx="8" fill="url(#wood)"/>
-      <rect x="106" y="282" width="188" height="278" rx="10" fill="none" stroke="#dde7ec" stroke-width="2"/>
-      <!-- croce verde farmacia -->
-      <g fill="#3da868">
-        <rect x="183" y="288" width="34" height="92" rx="8"/>
-        <rect x="154" y="317" width="92" height="34" rx="8"/>
-      </g>
-      <g fill="#5dbf7e">
-        <rect x="188" y="293" width="10" height="82" rx="5"/>
-        <rect x="159" y="322" width="82" height="10" rx="5"/>
-      </g>
-      <!-- ripiano 1 -->
-      <rect x="110" y="462" width="180" height="5" rx="2.5" fill="#c9d8e0"/>
-      <g>
-        <rect x="122" y="414" width="32" height="48" rx="5" fill="url(#bluv)"/>
-        <rect x="130" y="403" width="16" height="13" rx="3" fill="#3d6a92"/>
-        <rect x="127" y="427" width="22" height="24" rx="3" fill="#fff" opacity=".92"/>
-        <rect x="131" y="432" width="14" height="2.5" fill="#9db4c4"/><rect x="131" y="438" width="14" height="2.5" fill="#9db4c4"/><rect x="131" y="444" width="10" height="2.5" fill="#9db4c4"/>
-        <rect x="124" y="417" width="7" height="38" rx="3.5" fill="#fff" opacity=".3"/>
-      </g>
-      <g>
-        <rect x="166" y="424" width="38" height="38" rx="6" fill="url(#amber)"/>
-        <ellipse cx="185" cy="424" rx="19" ry="5.5" fill="#b87d20"/>
-        <ellipse cx="185" cy="421" rx="14" ry="4" fill="#d99c34"/>
-        <rect x="173" y="434" width="24" height="20" rx="3" fill="#fff" opacity=".92"/>
-        <path d="M 182 438 h 6 v 4 h 4 v 6 h -4 v 4 h -6 v -4 h -4 v -6 h 4 z" fill="#e07a5f"/>
-        <rect x="168" y="427" width="6" height="32" rx="3" fill="#fff" opacity=".3"/>
-      </g>
-      <g>
-        <rect x="218" y="408" width="28" height="54" rx="5" fill="url(#grnv)"/>
-        <rect x="225" y="397" width="14" height="13" rx="3" fill="#477a44"/>
-        <rect x="222" y="422" width="20" height="26" rx="3" fill="#fff" opacity=".92"/>
-        <circle cx="232" cy="431" r="4" fill="#8fc08b"/>
-        <rect x="226" y="439" width="12" height="2.5" fill="#a8bca6"/><rect x="226" y="444" width="9" height="2.5" fill="#a8bca6"/>
-        <rect x="220" y="411" width="6" height="44" rx="3" fill="#fff" opacity=".3"/>
-      </g>
-      <g transform="rotate(14 268 452)">
-        <rect x="252" y="442" width="40" height="20" rx="10" fill="#fff" stroke="#c2d2da" stroke-width="1.5"/>
-        <path d="M 252 452 a 10 10 0 0 1 10 -10 h 10 v 20 h -10 a 10 10 0 0 1 -10 -10 z" fill="#e07a5f"/>
-        <rect x="258" y="448" width="8" height="3" rx="1.5" fill="#fff" opacity=".6"/>
-      </g>
-      <!-- ripiano 2 -->
-      <rect x="110" y="540" width="180" height="5" rx="2.5" fill="#c9d8e0"/>
-      <g>
-        <rect x="120" y="500" width="44" height="40" rx="6" fill="#e8eef2" stroke="#c2d2da" stroke-width="1.5"/>
-        <rect x="120" y="500" width="44" height="13" rx="6" fill="#7fb0d4"/>
-        <path d="M 138 521 h 8 v 5 h 5 v 8 h -5 v 5 h -8 v -5 h -5 v -8 h 5 z" fill="#e07a5f"/>
-      </g>
-      <g>
-        <circle cx="196" cy="522" r="19" fill="#fff" stroke="#c2d2da" stroke-width="1.5"/>
-        <circle cx="196" cy="522" r="13" fill="#f4d8d2"/>
-        <path d="M 196 515 q 7 5 0 14 q -7 -9 0 -14 z" fill="#e07a5f"/>
-      </g>
-      <g transform="rotate(-8 252 520)">
-        <rect x="228" y="516" width="50" height="9" rx="4.5" fill="#eef3f5" stroke="#c2d2da" stroke-width="1.3"/>
-        <rect x="268" y="514" width="12" height="13" rx="3" fill="#9db4c4"/>
-        <rect x="233" y="519" width="3" height="3" fill="#e07a5f"/><rect x="240" y="519" width="3" height="3" fill="#9db4c4"/><rect x="247" y="519" width="3" height="3" fill="#9db4c4"/><rect x="254" y="519" width="3" height="3" fill="#9db4c4"/>
-      </g>
-      <!-- maniglie -->
-      <rect x="186" y="404" width="28" height="0" fill="none"/>
-    </g>
-    <!-- cuoricini -->
-    <path d="M 330 530 c 0 -5 8 -7 9 -1 c 1 -6 9 -4 9 1 c 0 5 -9 11 -9 11 c 0 0 -9 -6 -9 -11 z" fill="#e07a5f" opacity=".55"/>
-    <path d="M 62 500 c 0 -4 6 -5.5 7 -.8 c 1 -4.7 7 -3.2 7 .8 c 0 4 -7 8.5 -7 8.5 c 0 0 -7 -4.5 -7 -8.5 z" fill="#e07a5f" opacity=".4"/>
-  </svg>
-  <div style="position:absolute;top:15%;left:0;right:0;display:flex;flex-direction:column;align-items:center">
-    <div class="splash-title" style="font-family:'Playfair Display',serif;font-size:1.7rem;font-weight:900">Armadietto Medicinali</div>
-    <div style="margin-top:8px;color:#5b7a94;font-size:.85rem;letter-spacing:2px">V4</div>
-  </div>
-</div>
-
-<header style="position:sticky;top:0;z-index:50;background:var(--bg2);border-bottom:1px solid var(--border);padding:14px 18px;display:flex;align-items:center;gap:11px">
-  <span style="font-size:26px">⚕️</span>
-  <h1 style="font-family:'Playfair Display',serif;font-size:1.25rem;font-weight:700;color:var(--accent2)">Armadietto Medicinali <span style="font-size:.65rem;font-weight:400;opacity:.6;font-family:'DM Sans',sans-serif">v4</span></h1>
+<header>
+<div class="logo-icon">⚕️</div>
+<div><h1>Armadietto Medicinali</h1><div class="version">v5.0.1 · I miei farmaci</div></div>
+<button class="ibtn" onclick="go('settings')">⚙️</button>
 </header>
+<main>
+<section id="home" class="section active">
+  <div id="homeStats" class="stats"></div>
+  <div class="sec-title">💊 Terapia di oggi · ancora da assumere</div>
+  <div id="todayPending" class="prod-list"></div>
+  <div class="sec-title">🕘 Aggiunti di recente</div>
+  <div id="recentMeds" class="prod-list"></div>
+</section>
 
-<main style="padding:16px 16px 90px;max-width:720px;margin:0 auto">
+<section id="farmaci" class="section">
+  <div class="chips"><button id="chipU" class="chip on" onclick="setArea('Umani')">👤 Umani</button><button id="chipP" class="chip" onclick="setArea('Pelosi')">🐾 Pelosi</button></div>
+  <div class="toolbar"><input id="medSearch" placeholder="Cerca farmaco..." oninput="renderMeds()"><div class="seg"><button id="modeAZ" class="on" onclick="setMode('az')">A-Z</button><button id="modeCAT" onclick="setMode('cat')">Categorie</button></div></div>
+  <div id="medList" class="prod-list"></div>
+</section>
 
-<div class="section active" id="sec-home">
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:18px" id="homeStats"></div>
-  <div id="homeAlert"></div>
-  <div class="flabel" style="margin-bottom:8px">🕐 Aggiunti di recente</div>
-  <div id="homeRecent"></div>
-</div>
-
-<div class="section" id="sec-farmaci">
-  <input type="text" id="medSearch" placeholder="🔍 Cerca farmaco..." oninput="renderFarmaci()" style="width:100%;margin-bottom:10px">
-  <div id="medCatChips" style="display:flex;gap:7px;overflow-x:auto;padding-bottom:8px;margin-bottom:6px"></div>
-  <div id="medList"></div>
-</div>
-
-<div class="section" id="sec-add">
-  <h2 id="formTitle" style="font-family:'Playfair Display',serif;font-size:1.15rem;color:var(--accent2);margin-bottom:14px">✨ Aggiungi Farmaco</h2>
-  <div class="fg" style="margin-bottom:12px">
-    <div style="display:flex;gap:8px">
-      <label for="boxPhotoCam" class="btn-s" style="flex:1;display:flex;align-items:center;justify-content:center;box-sizing:border-box;cursor:pointer">📷 Fotocamera</label>
-      <label for="boxPhoto" class="btn-s" style="flex:1;display:flex;align-items:center;justify-content:center;box-sizing:border-box;cursor:pointer">🖼️ Galleria</label>
+<section id="add" class="section">
+  <div class="sec-title" id="medFormTitle">Aggiungi farmaco</div>
+  <div class="card" style="padding:14px">
+    <div class="fab-row"><button class="btn-s" onclick="document.getElementById('photoCamera').click()">📷 Fotocamera</button><button class="btn-s" onclick="document.getElementById('photoGallery').click()">🖼️ Galleria</button></div>
+    <input id="photoCamera" type="file" accept="image/*" capture="environment" style="display:none" onchange="photoLookup(this)">
+    <input id="photoGallery" type="file" accept="image/*" style="display:none" onchange="photoLookup(this)">
+    <button class="btn-s" style="width:100%;margin-bottom:13px" onclick="openScanner()">▥ Scansiona codice a barre</button>
+    <div class="fg"><label class="flabel">Sezione</label><select id="fArea" onchange="onAreaChange()"><option>Umani</option><option>Pelosi</option></select></div>
+    <div class="fg"><label class="flabel">Nome farmaco *</label><input id="fName" placeholder="es. Augmentin 875+125 mg" oninput="scheduleAtc()"></div>
+    <div id="atcBox" class="lookup">
+      <div class="flabel">Categoria automatica · ATC livello 2</div>
+      <strong id="atcValue">In attesa del nome del farmaco</strong>
+      <div id="atcState" class="small">Digita almeno 3 caratteri.</div>
+      <div id="atcChoices" style="display:flex;flex-wrap:wrap;gap:6px;margin-top:8px"></div>
     </div>
-    <input type="file" id="boxPhotoCam" accept="image/*" capture="environment" style="position:absolute;width:1px;height:1px;opacity:0;pointer-events:none" onchange="photoLookup(this)">
-    <input type="file" id="boxPhoto" accept="image/*" style="position:absolute;width:1px;height:1px;opacity:0;pointer-events:none" onchange="photoLookup(this)">
-    <button class="btn-s" style="width:100%;margin-top:8px" onclick="openScanner()">📊 Scansiona codice a barre</button>
-    <div style="font-size:.72rem;color:var(--text3);margin-top:4px">L'AI legge nome, scadenza e tipo dalla scatola</div>
+    <div id="vetCatWrap" class="fg" style="display:none;margin-top:12px"><label class="flabel">Categoria veterinaria</label><input id="fVetCat" placeholder="es. Dermatologici"></div>
+    <div class="two" style="margin-top:12px">
+      <div class="fg"><label class="flabel">Principio attivo</label><input id="fActive" placeholder="es. amoxicillina + acido clavulanico"></div>
+      <div class="fg"><label class="flabel">Dosaggio</label><input id="fStrength" placeholder="es. 875 mg + 125 mg"></div>
+    </div>
+    <div class="two"><div class="fg"><label class="flabel">Forma</label><select id="fForm"><option>Compresse</option><option>Capsule</option><option>Bustine</option><option>Gocce</option><option>Sciroppo</option><option>Crema</option><option>Soluzione</option><option>Altro</option></select></div><div class="fg"><label class="flabel">Via</label><select id="fRoute"><option>Orale</option><option>Cutanea</option><option>Inalatoria</option><option>Iniettiva</option><option>Altro</option></select></div></div>
+    <div class="two"><div class="fg"><label class="flabel">Quantità</label><input id="fQty" type="number" min="0" step=".5" value="1"></div><div class="fg"><label class="flabel">Unità</label><select id="fUnit"><option>conf</option><option>pz</option><option>ml</option><option>g</option><option>bust</option></select></div></div>
+    <div class="two"><div class="fg"><label class="flabel">Scorta minima</label><input id="fMin" type="number" min="0" step=".5" value="0"></div><div class="fg"><label class="flabel">Scadenza</label><input id="fExpiry" type="date"></div></div>
+    <div class="fg"><label class="flabel">Barcode</label><input id="fBarcode" inputmode="numeric" placeholder="letto dallo scanner"></div>
+    <div class="fg"><label class="flabel">Dove lo tieni?</label><select id="fLocation"></select></div>
+    <div class="fg"><label class="flabel">Note</label><textarea id="fNotes"></textarea></div>
+    <div style="display:flex;gap:8px"><button class="btn-p" style="flex:1" onclick="saveMed()">💾 Salva farmaco</button><button id="medDeleteBtn" class="btn-d" style="display:none" onclick="deleteCurrentMed()">🗑️</button></div>
   </div>
-  <div class="fg" style="margin-bottom:12px"><label class="flabel">💊 Nome *</label><input type="text" id="fNome" placeholder="es. Tachipirina 1000"></div>
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:11px;margin-bottom:12px">
-    <div class="fg"><label class="flabel">A cosa serve</label><select id="fCat"></select></div>
-    <div class="fg"><label class="flabel">Forma</label><select id="fForma"></select></div>
-  </div>
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:11px;margin-bottom:12px">
-    <div class="fg"><label class="flabel">Quantità</label><input type="number" id="fQty" value="1" min="0" step="0.5"></div>
-    <div class="fg"><label class="flabel">Unità</label><select id="fUnit"><option>conf</option><option>pz</option><option>ml</option><option>g</option><option>bust</option></select></div>
-  </div>
-  <div class="fg" style="margin-bottom:12px"><label class="flabel">📅 Scadenza</label><input type="date" id="fScad"></div>
-  <div class="fg" style="margin-bottom:12px"><label class="flabel">📍 Dove lo tieni?</label><div id="locPicker" class="loc-picker"></div></div>
-  <div class="fg" style="margin-bottom:16px"><label class="flabel">📝 Note</label><input type="text" id="fNote" placeholder="es. per Luca, 1 al giorno dopo i pasti"></div>
-  <button class="btn-p" onclick="saveMed()">💾 Salva Farmaco</button>
-</div>
+</section>
 
-<div class="section" id="sec-scadenze">
-  <h2 style="font-family:'Playfair Display',serif;font-size:1.15rem;color:var(--accent2);margin-bottom:14px">📅 Scadenze</h2>
-  <div id="scadList"></div>
-</div>
+<section id="scadenze" class="section"><div class="sec-title">📅 Scadenze</div><div id="expiryList" class="prod-list"></div></section>
 
-<div class="section" id="sec-impostazioni">
-  <h2 style="font-family:'Playfair Display',serif;font-size:1.15rem;color:var(--accent2);margin-bottom:14px">⚙️ Impostazioni</h2>
-  <div class="flabel" style="margin-bottom:8px">📍 Luoghi e ripiani</div>
-  <div id="stgLuoghi" style="margin-bottom:8px"></div>
-  <div style="display:flex;gap:8px;margin-bottom:24px">
-    <input type="text" id="newLuogoNome" placeholder="es. 🚿 Armadietto bagno" style="flex:1">
-    <button class="btn-s" onclick="addLuogo()">＋</button>
-  </div>
-  <div class="flabel" style="margin-bottom:8px">☁️ Sincronizzazione</div>
-  <div class="fg" style="margin-bottom:10px"><label class="flabel">🔗 URL script di sincronizzazione</label>
-    <input type="text" id="syncUrlInput" placeholder="https://script.google.com/macros/s/.../exec" style="font-size:.78rem"></div>
-  <div class="fg" style="margin-bottom:10px"><label class="flabel">🔑 PIN</label>
-    <input type="password" id="syncPinInput" placeholder="PIN impostato nello script"></div>
-  <label style="display:flex;align-items:center;gap:10px;font-size:.85rem;margin-bottom:12px;cursor:pointer">
-    <input type="checkbox" id="syncAutoInput" style="width:18px;height:18px"> Sincronizzazione automatica
-  </label>
-  <button class="btn-p" style="margin-bottom:12px" onclick="saveSyncSettings()">💾 Salva configurazione</button>
-  <div style="display:flex;gap:9px;margin-bottom:8px">
-    <button class="btn-s" style="flex:1" onclick="syncUpload(false)">⬆️ Invia al cloud</button>
-    <button class="btn-s" style="flex:1" onclick="syncDownload(true)">⬇️ Scarica dal cloud</button>
-  </div>
-  <div id="syncLastInfo" style="font-size:.75rem;color:var(--text3);margin-bottom:24px;text-align:center"></div>
-  <div class="flabel" style="margin-bottom:8px">🤖 Intelligenza artificiale</div>
-  <div class="fg" style="margin-bottom:10px"><label class="flabel">🔑 API Key Gemini</label>
-    <input type="password" id="geminiKeyInput" placeholder="Per la lettura delle confezioni">
-    <div style="font-size:.72rem;color:var(--text3);margin-top:4px">Gratis su <strong>aistudio.google.com</strong> · condivisa con Dispensa e Biblioteca su questo dispositivo</div></div>
-  <button class="btn-s" style="margin-bottom:24px" onclick="saveGeminiKey()">💾 Salva chiave</button>
-  <div class="flabel" style="margin-bottom:8px">🗂️ Dati</div>
-  <div style="display:flex;gap:9px;margin-bottom:8px">
-    <button class="btn-s" style="flex:1" onclick="exportData()">📤 Esporta</button>
-    <button class="btn-s" style="flex:1" onclick="document.getElementById('importFile').click()">📥 Importa</button>
-  </div>
-  <input type="file" id="importFile" accept=".json" style="display:none" onchange="importData(this)">
-  <div style="font-size:.72rem;color:var(--text3);text-align:center;margin-top:14px">Armadietto Medicinali v4</div>
-</div>
+<section id="terapie" class="section">
+  <div class="sec-title">🩺 Terapie</div><div id="therapyGroups"></div>
+  <button class="btn-p" style="width:100%;margin-top:13px" onclick="openTherapyForm()">＋ Nuova terapia</button>
+</section>
 
+<section id="settings" class="section">
+  <div class="sec-title">⚙️ Impostazioni</div>
+  <div class="setting open"><div class="st-h" onclick="this.parentElement.classList.toggle('open')"><strong>👥 Soggetti</strong><span>›</span></div><div class="st-b"><div id="subjectList"></div><div style="display:flex;gap:7px;margin-top:10px"><input id="newSubjectName" placeholder="Nome"><select id="newSubjectType" style="max-width:120px"><option>Umano</option><option>Peloso</option></select><button class="btn-s" onclick="addSubject()">＋</button></div></div></div>
+  <div class="setting"><div class="st-h" onclick="this.parentElement.classList.toggle('open')"><strong>📍 Luoghi e ripiani</strong><span>›</span></div><div class="st-b"><div id="locationList"></div><div style="display:flex;gap:7px;margin-top:10px"><input id="newLocation" placeholder="es. Armadietto bagno · Ripiano 1"><button class="btn-s" onclick="addLocation()">＋</button></div></div></div>
+  <div class="setting"><div class="st-h" onclick="this.parentElement.classList.toggle('open')"><strong>🔎 AIFA · classificazione automatica</strong><span>›</span></div><div class="st-b"><div class="fg"><label class="flabel">URL Web App Google Apps Script</label><input id="apiUrl" placeholder="https://script.google.com/macros/s/.../exec"></div><button class="btn-p" style="width:100%" onclick="saveApiUrl()">💾 Salva URL</button><div class="note" style="margin-top:10px">Per i farmaci umani il nome viene cercato nella banca dati AIFA e l'app salva il codice ATC completo, mostrando come categoria il solo livello 2.</div></div></div>
+  <div class="setting"><div class="st-h" onclick="this.parentElement.classList.toggle('open')"><strong>🤖 Lettura confezione</strong><span>›</span></div><div class="st-b"><div class="fg"><label class="flabel">API key Gemini</label><input id="geminiKey" type="password" placeholder="Per foto confezione"></div><button class="btn-p" style="width:100%" onclick="saveGeminiKey()">💾 Salva chiave</button></div></div>
+  <div class="setting"><div class="st-h" onclick="this.parentElement.classList.toggle('open')"><strong>🎨 Aspetto</strong><span>›</span></div><div class="st-b"><div class="theme-grid"><div class="theme" data-theme="nordic" onclick="setTheme('nordic')">💜 Armadietto</div><div class="theme" data-theme="cielo" onclick="setTheme('cielo')">🩵 Cielo</div><div class="theme" data-theme="salvia" onclick="setTheme('salvia')">🌿 Salvia</div><div class="theme" data-theme="lavanda" onclick="setTheme('lavanda')">🪻 Lavanda</div></div></div></div>
+  <div class="setting"><div class="st-h" onclick="this.parentElement.classList.toggle('open')"><strong>☁️ Backup e sincronizzazione</strong><span>›</span></div><div class="st-b"><div class="fg"><label class="flabel">PIN cloud</label><input id="syncPin" type="password"></div><label style="display:flex;gap:8px;align-items:center;margin-bottom:12px;font-size:.82rem"><input id="syncAuto" type="checkbox" style="width:auto"> Sincronizzazione automatica</label><div class="fab-row"><button class="btn-s" onclick="cloudUpload()">⬆️ Invia</button><button class="btn-s" onclick="cloudDownload()">⬇️ Scarica</button></div><div class="fab-row"><button class="btn-s" onclick="exportData()">📤 Esporta</button><button class="btn-s" onclick="document.getElementById('importFile').click()">📥 Importa</button></div><input id="importFile" type="file" accept=".json" style="display:none" onchange="importData(this)"><button class="btn-p" style="width:100%" onclick="saveSyncSettings()">💾 Salva impostazioni cloud</button></div></div>
+</section>
 </main>
 
-<nav style="position:fixed;bottom:0;left:0;right:0;z-index:60;background:var(--bg2);border-top:1px solid var(--border);display:flex;justify-content:space-around;padding:8px 4px max(8px,env(safe-area-inset-bottom))">
-  <div class="ni on" id="nav-home" onclick="goTo('home')" style="text-align:center;cursor:pointer;font-size:.62rem;color:var(--text2)"><div style="font-size:21px">🏠</div>Home</div>
-  <div class="ni" id="nav-farmaci" onclick="goTo('farmaci')" style="text-align:center;cursor:pointer;font-size:.62rem;color:var(--text2)"><div style="font-size:21px">💊</div>Farmaci</div>
-  <div class="ni" id="nav-add" onclick="clearForm();goTo('add')" style="text-align:center;cursor:pointer;font-size:.62rem;color:var(--text2)"><div style="font-size:21px">➕</div>Aggiungi</div>
-  <div class="ni" id="nav-scadenze" onclick="goTo('scadenze')" style="text-align:center;cursor:pointer;font-size:.62rem;color:var(--text2)"><div style="font-size:21px">📅</div>Scadenze</div>
-  <div class="ni" id="nav-impostazioni" onclick="goTo('impostazioni')" style="text-align:center;cursor:pointer;font-size:.62rem;color:var(--text2)"><div style="font-size:21px">⚙️</div>Altro</div>
+<nav>
+<div class="ni on" data-page="home" onclick="go('home')"><div class="ico">🏡</div>Home</div>
+<div class="ni" data-page="farmaci" onclick="go('farmaci')"><div class="ico">💊</div>Farmaci</div>
+<div class="ni nadd" data-page="add" onclick="newMed()"><div class="ico">✚</div>Aggiungi</div>
+<div class="ni" data-page="scadenze" onclick="go('scadenze')"><div class="ico">🗓️</div>Scadenze</div>
+<div class="ni" data-page="terapie" onclick="go('terapie')"><div class="ico">🩺</div>Terapie</div>
 </nav>
 
-<!-- DETTAGLIO -->
-<div class="overlay" id="medModal" onclick="if(event.target===this)closeMed()">
-  <div class="modal"><div class="modal-handle"></div><div id="medModalBody"></div></div>
-</div>
-
-<!-- SCANNER BARCODE -->
-<div class="overlay" id="scanModal" onclick="if(event.target===this)closeScanner()">
-  <div class="modal" style="padding-bottom:18px"><div class="modal-handle"></div>
-    <div style="font-weight:700;margin-bottom:10px;color:var(--accent2)">📊 Inquadra il codice a barre</div>
-    <video id="scanVideo" playsinline muted style="width:100%;border-radius:12px;background:#000;aspect-ratio:3/4;object-fit:cover"></video>
-    <button class="btn-s" style="width:100%;margin-top:10px" onclick="closeScanner()">✕ Chiudi</button>
-  </div>
-</div>
-
-<!-- CONFIRM -->
-<div class="confirm-overlay" id="confirmOverlay">
-  <div class="confirm-box">
-    <div style="font-size:22px;margin-bottom:12px;text-align:center">⚠️</div>
-    <div id="confirmMsg" style="font-size:.95rem;font-weight:600;color:var(--text);text-align:center;margin-bottom:20px;line-height:1.4"></div>
-    <div style="display:flex;gap:10px">
-      <button onclick="closeConfirm()" style="flex:1;padding:11px;border-radius:10px;border:1px solid var(--border);background:var(--card2);color:var(--text);font-family:inherit;font-size:.9rem;cursor:pointer">Annulla</button>
-      <button id="confirmOkBtn" style="flex:1;padding:11px;border-radius:10px;border:none;background:linear-gradient(135deg,#b84c3a,#8f2d1e);color:#fff;font-family:inherit;font-size:.9rem;font-weight:600;cursor:pointer">Conferma</button>
-    </div>
-  </div>
-</div>
-
-<div id="toast" style="position:fixed;bottom:84px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--card);border:1px solid var(--border);color:var(--text);padding:10px 18px;border-radius:12px;font-size:.85rem;font-weight:600;box-shadow:var(--shadow);opacity:0;transition:all .3s;z-index:500;pointer-events:none;white-space:nowrap"></div>
+<div id="historyModal" class="overlay" onclick="if(event.target===this)closeOverlay('historyModal')"><div class="sheet"><div class="sheet-head"><div><div id="historyTitle" class="sheet-title">Storico assunzioni</div><div class="small">Assunzioni registrate come prese</div></div><button class="close" onclick="closeOverlay('historyModal')">✕</button></div><div id="historyContent"></div></div></div>
+<div id="therapyModal" class="overlay" onclick="if(event.target===this)closeOverlay('therapyModal')"><div class="sheet"><div class="sheet-head"><div id="therapyFormTitle" class="sheet-title">Nuova terapia</div><button class="close" onclick="closeOverlay('therapyModal')">✕</button></div>
+  <div class="fg"><label class="flabel">Soggetto</label><select id="tSubject" onchange="fillTherapyMeds()"></select></div>
+  <div class="fg"><label class="flabel">Farmaco</label><select id="tMed"></select></div>
+  <div class="fg"><label class="flabel">Dose</label><input id="tDose" placeholder="es. 1 compressa"></div>
+  <div class="fg"><label class="flabel">Orari (separati da virgola)</label><input id="tTimes" placeholder="08:00, 20:00"></div>
+  <div class="two"><div class="fg"><label class="flabel">Dal</label><input id="tStart" type="date"></div><div class="fg"><label class="flabel">Al (facoltativo)</label><input id="tEnd" type="date"></div></div>
+  <div class="fg"><label class="flabel">Giorni</label><select id="tFreq"><option value="daily">Tutti i giorni</option><option value="weekdays">Lun–Ven</option><option value="weekends">Sab–Dom</option></select></div>
+  <div style="display:flex;gap:8px"><button class="btn-p" style="flex:1" onclick="saveTherapy()">💾 Salva terapia</button><button id="therapyDeleteBtn" class="btn-d" style="display:none" onclick="deleteTherapy()">🗑️</button></div>
+</div></div>
+<div id="scanModal" class="overlay" onclick="if(event.target===this)closeScanner()"><div class="sheet"><div class="sheet-head"><div class="sheet-title">▥ Inquadra il codice</div><button class="close" onclick="closeScanner()">✕</button></div><video id="scanVideo" class="scan-video" playsinline muted></video><div class="small">Se il codice non identifica il medicinale, usa la foto o digita il nome: la categoria ATC viene cercata dal nome.</div></div></div>
+<div id="toast" class="toast"></div>
 
 <script>
-// ── STATE ──
-const CATS={"Dolore e febbre":"🌡️","Stomaco e digestione":"🫃","Tosse e raffreddore":"🤧","Allergie":"🌼","Ferite e disinfezione":"🩹","Cuore e pressione":"❤️","Antibiotici":"💊","Vitamine e integratori":"🍊","Occhi e orecchie":"👁️","Pelle e creme":"🧴","Altro":"⚕️"};
-const FORME=["Compresse","Capsule","Sciroppo","Gocce","Crema/Pomata","Spray","Cerotti","Bustine","Supposte","Fiale","Collirio","Altro"];
-const WARN_GIORNI=90;
-let meds=[],settings=null,currentMedId=null,locPickerLuogo=null,locPickerRipiano=null;
-let confirmCallback=null,renameLuogoIdx=null,medCatFilter=null;
-
-function load(){
-  try{meds=JSON.parse(localStorage.getItem("armadietto_v1")||"[]");}catch{meds=[];}
-  try{settings=JSON.parse(localStorage.getItem("armadietto_settings_v1")||"null");}catch{settings=null;}
-  if(!settings)settings={luoghi:[{id:"l1",nome:"🚿 Armadietto Bagno",ripiani:["Ripiano alto","Ripiano basso"]},{id:"l2",nome:"🍴 Cassetto Cucina",ripiani:[]}]};
-}
-function saveM(){localStorage.setItem("armadietto_v1",JSON.stringify(meds));scheduleAutoUpload();}
-function saveS(){localStorage.setItem("armadietto_settings_v1",JSON.stringify(settings));scheduleAutoUpload();}
-function genId(){return Date.now().toString(36)+Math.random().toString(36).slice(2);}
-function esc(s){return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");}
-function showToast(msg,color){
-  const t=document.getElementById("toast");
-  t.textContent=msg;t.style.borderColor=color||"var(--border)";
-  t.style.opacity="1";t.style.transform="translateX(-50%) translateY(0)";
-  clearTimeout(t._to);t._to=setTimeout(()=>{t.style.opacity="0";t.style.transform="translateX(-50%) translateY(20px)";},2200);
-}
-function askConfirm(msg,cb){
-  confirmCallback=cb;
-  document.getElementById("confirmMsg").textContent=msg;
-  document.getElementById("confirmOverlay").classList.add("open");
-  document.getElementById("confirmOkBtn").onclick=()=>{closeConfirm();if(confirmCallback)confirmCallback();};
-}
-function closeConfirm(){document.getElementById("confirmOverlay").classList.remove("open");}
-function luogoIcon(nome){const ch=Array.from(String(nome||"").trim())[0]||"📍";return /[\p{L}\p{N}]/u.test(ch)?"📍":ch;}
-
-// ── SCADENZE ──
-function daysToExp(m){if(!m.scad)return null;return Math.floor((new Date(m.scad+"T12:00")-new Date())/86400000);}
-function scadBadge(m){
-  const d=daysToExp(m);
-  if(d===null)return'<span class="scad-badge" style="color:var(--text3);border:1px solid var(--border)">senza data</span>';
-  if(d<0)return`<span class="scad-badge scad-exp">SCADUTO</span>`;
-  if(d<=WARN_GIORNI)return`<span class="scad-badge scad-warn">${d===0?"scade oggi":d+" gg"}</span>`;
-  return`<span class="scad-badge scad-ok">${new Date(m.scad+"T12:00").toLocaleDateString("it-IT",{month:"short",year:"2-digit"})}</span>`;
-}
-
-// ── NAV ──
-function goTo(s){
-  document.querySelectorAll(".section").forEach(el=>el.classList.remove("active"));
-  document.querySelectorAll(".ni").forEach(el=>el.classList.remove("on"));
-  document.getElementById("sec-"+s).classList.add("active");
-  const nb=document.getElementById("nav-"+s);if(nb)nb.classList.add("on");
-  if(s==="home")renderHome();
-  if(s==="farmaci")renderFarmaci();
-  if(s==="scadenze")renderScadenze();
-  if(s==="impostazioni"){renderStgLuoghi();fillSyncForm();}
-}
-function refreshView(){const sec=document.querySelector(".section.active");const s=sec?sec.id.replace("sec-",""):"home";if(s==="home")renderHome();else if(s==="farmaci")renderFarmaci();else if(s==="scadenze")renderScadenze();}
-
-// ── HOME ──
-function renderHome(){
-  const tot=meds.length;
-  const scaduti=meds.filter(m=>{const d=daysToExp(m);return d!==null&&d<0;}).length;
-  const presto=meds.filter(m=>{const d=daysToExp(m);return d!==null&&d>=0&&d<=WARN_GIORNI;}).length;
-  const senza=meds.filter(m=>!m.scad).length;
-  const stat=(n,l,e,warn)=>`<div style="background:var(--card);border:1px solid ${warn&&n>0?"var(--red)":"var(--border)"};border-radius:14px;padding:14px;text-align:center;box-shadow:var(--shadow)"><div style="font-size:22px">${e}</div><div style="font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:900;color:${warn&&n>0?"var(--red)":"var(--accent2)"}">${n}</div><div style="font-size:.72rem;color:var(--text2)">${l}</div></div>`;
-  document.getElementById("homeStats").innerHTML=stat(tot,"Farmaci totali","⚕️")+stat(scaduti,"Scaduti","🚫",true)+stat(presto,"In scadenza (90 gg)","⏳")+stat(senza,"Senza data","❓");
-  document.getElementById("homeAlert").innerHTML=scaduti>0?`<div style="background:color-mix(in srgb,var(--red) 10%,var(--card));border:1px solid var(--red);border-radius:12px;padding:11px 14px;margin-bottom:16px;font-size:.85rem;cursor:pointer" onclick="goTo('scadenze')">🚫 <strong>${scaduti} ${scaduti===1?"farmaco scaduto":"farmaci scaduti"}</strong> — toccare per vedere. I farmaci scaduti vanno portati in farmacia per lo smaltimento.</div>`:"";
-  const rec=[...meds].sort((a,b)=>(b.addedAt||0)-(a.addedAt||0)).slice(0,5);
-  document.getElementById("homeRecent").innerHTML=rec.length?rec.map(medCardHtml).join(""):'<div class="empty"><div class="empty-ico">⚕️</div><p>Armadietto vuoto.<br>Tocca ➕ per il primo farmaco!</p></div>';
-}
-
-// ── CARD ──
-function medCardHtml(m){
-  return`<div onclick="openMed('${m.id}')" style="display:flex;gap:12px;align-items:center;background:var(--card);border:1px solid var(--border);border-radius:14px;padding:11px 13px;margin-bottom:9px;box-shadow:var(--shadow);cursor:pointer">
-    <div style="font-size:30px;flex-shrink:0">${CATS[m.cat]||"⚕️"}</div>
-    <div style="flex:1;min-width:0">
-      <div style="font-weight:600;font-size:.93rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(m.nome)}</div>
-      <div style="font-size:.76rem;color:var(--text2)">${esc(m.forma||"")}${m.forma&&m.cat?" · ":""}${esc(m.cat||"")}</div>
-      <div style="font-size:.72rem;color:var(--text3);margin-top:2px">${m.luogoNome?esc(m.luogoNome)+(m.ripiano?" · "+esc(m.ripiano):""):"📍 Senza posizione"}</div>
-    </div>
-    <div style="text-align:right;display:flex;flex-direction:column;gap:5px;align-items:flex-end">
-      ${scadBadge(m)}
-      <div style="font-size:.8rem;color:var(--text2)"><strong style="color:var(--accent2)">${m.qty}</strong> ${esc(m.unit)}</div>
-      <div class="card-qty-btns">
-        <button class="card-qty-btn" onclick="quickQty('${m.id}',-1,event)">−</button>
-        <button class="card-qty-btn" onclick="quickQty('${m.id}',1,event)">＋</button>
-      </div>
-    </div>
-  </div>`;
-}
-function quickQty(id,delta,ev){
-  if(ev)ev.stopPropagation();
-  const m=meds.find(x=>x.id===id);if(!m)return;
-  let q=Math.round(((parseFloat(m.qty)||0)+delta)*100)/100;
-  if(q<0)q=0;
-  m.qty=q;saveM();refreshView();
-  if(q===0){
-    askConfirm(m.nome+" è terminato. Eliminarlo dall'armadietto?",()=>{
-      meds=meds.filter(x=>x.id!==id);saveM();refreshView();showToast("🗑️ Farmaco eliminato");
-    });
-  }else{
-    showToast((delta<0?"➖ ":"➕ ")+m.nome+": "+q+" "+m.unit,delta<0?"var(--yellow)":"var(--green)");
-  }
-}
-
-// ── FARMACI ──
-function renderFarmaci(){
-  const cats=[...new Set(meds.map(m=>m.cat).filter(Boolean))];
-  document.getElementById("medCatChips").innerHTML=`<div class="chip${!medCatFilter?" on":""}" onclick="medCatFilter=null;renderFarmaci()">Tutti</div>`+cats.map(c=>`<div class="chip${medCatFilter===c?" on":""}" onclick="medCatFilter='${esc(c)}';renderFarmaci()">${CATS[c]||"⚕️"} ${esc(c)}</div>`).join("");
-  const q=(document.getElementById("medSearch").value||"").toLowerCase().trim();
-  let list=meds.filter(m=>(!q||m.nome.toLowerCase().includes(q)||(m.note||"").toLowerCase().includes(q))&&(!medCatFilter||m.cat===medCatFilter));
-  list.sort((a,b)=>a.nome.localeCompare(b.nome));
-  document.getElementById("medList").innerHTML=list.length?list.map(medCardHtml).join(""):'<div class="empty"><div class="empty-ico">🔍</div><p>Nessun farmaco trovato.</p></div>';
-}
-
-// ── SCADENZE ──
-function renderScadenze(){
-  const withD=meds.filter(m=>m.scad).map(m=>({m,d:daysToExp(m)})).sort((a,b)=>a.d-b.d);
-  const scaduti=withD.filter(x=>x.d<0),presto=withD.filter(x=>x.d>=0&&x.d<=WARN_GIORNI),ok=withD.filter(x=>x.d>WARN_GIORNI);
-  const senza=meds.filter(m=>!m.scad);
-  let html="";
-  const sez=(t,arr,extra)=>{if(!arr.length)return"";return`<div class="flabel" style="margin:14px 0 8px">${t} (${arr.length})</div>${extra||""}`+arr.map(x=>medCardHtml(x.m||x)).join("");};
-  html+=sez("🚫 Scaduti",scaduti,`<div style="font-size:.75rem;color:var(--text3);margin-bottom:8px">Da portare in farmacia per lo smaltimento corretto.</div>`);
-  html+=sez("⏳ Entro "+WARN_GIORNI+" giorni",presto);
-  html+=sez("✅ Più avanti",ok);
-  html+=sez("❓ Senza data di scadenza",senza);
-  document.getElementById("scadList").innerHTML=html||'<div class="empty"><div class="empty-ico">📅</div><p>Nessun farmaco inserito.</p></div>';
-}
-
-// ── DETTAGLIO ──
-function openMed(id){
-  const m=meds.find(x=>x.id===id);if(!m)return;currentMedId=id;
-  document.getElementById("medModalBody").innerHTML=`
-    <div style="display:flex;gap:14px;margin-bottom:16px;align-items:center">
-      <div style="font-size:46px">${CATS[m.cat]||"⚕️"}</div>
-      <div style="flex:1;min-width:0">
-        <div style="font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;color:var(--accent2);line-height:1.25">${esc(m.nome)}</div>
-        <div style="font-size:.82rem;color:var(--text2);margin-top:3px">${esc(m.forma||"")}${m.forma&&m.cat?" · ":""}${esc(m.cat||"")}</div>
-        <div style="margin-top:6px">${scadBadge(m)}</div>
-      </div></div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:14px;font-size:.82rem">
-      <div style="background:var(--card2);border-radius:10px;padding:9px 11px"><div style="font-size:.68rem;color:var(--text3)">Quantità</div><strong>${m.qty}</strong> ${esc(m.unit)}</div>
-      <div style="background:var(--card2);border-radius:10px;padding:9px 11px"><div style="font-size:.68rem;color:var(--text3)">Scadenza</div>${m.scad?new Date(m.scad+"T12:00").toLocaleDateString("it-IT"):"—"}</div>
-      <div style="background:var(--card2);border-radius:10px;padding:9px 11px;grid-column:1/-1"><div style="font-size:.68rem;color:var(--text3)">Posizione</div>${m.luogoNome?esc(m.luogoNome)+(m.ripiano?" · "+esc(m.ripiano):""):"—"}</div>
-      ${m.note?`<div style="background:var(--card2);border-radius:10px;padding:9px 11px;grid-column:1/-1"><div style="font-size:.68rem;color:var(--text3)">Note</div>${esc(m.note)}</div>`:""}
-    </div>
-    <div style="display:flex;gap:8px">
-      <button class="btn-s" style="flex:1" onclick="editMed()">✏️ Modifica</button>
-      <button class="btn-d" style="flex:1" onclick="askConfirm('Eliminare questo farmaco?',deleteMed)">🗑️ Elimina</button>
-    </div>`;
-  document.getElementById("medModal").classList.add("open");
-}
-function closeMed(){document.getElementById("medModal").classList.remove("open");currentMedId=null;}
-function deleteMed(){meds=meds.filter(x=>x.id!==currentMedId);saveM();closeMed();refreshView();showToast("🗑️ Farmaco eliminato");}
-
-// ── FORM ──
-function buildSelects(){
-  document.getElementById("fCat").innerHTML=Object.keys(CATS).map(c=>`<option value="${esc(c)}">${CATS[c]} ${esc(c)}</option>`).join("");
-  document.getElementById("fForma").innerHTML=FORME.map(x=>`<option>${x}</option>`).join("");
-}
-function clearForm(){
-  currentMedId=null;
-  ["fNome","fScad","fNote"].forEach(id=>document.getElementById(id).value="");
-  document.getElementById("fQty").value="1";document.getElementById("fUnit").value="conf";
-  document.getElementById("fCat").value="Dolore e febbre";document.getElementById("fForma").value="Compresse";
-  locPickerLuogo=null;locPickerRipiano=null;renderLocPicker();
-  document.getElementById("formTitle").textContent="✨ Aggiungi Farmaco";
-}
-function editMed(){
-  const m=meds.find(x=>x.id===currentMedId);if(!m)return;
-  closeMed();currentMedId=m.id;
-  document.getElementById("fNome").value=m.nome;
-  document.getElementById("fCat").value=m.cat||"Altro";document.getElementById("fForma").value=m.forma||"Altro";
-  document.getElementById("fQty").value=m.qty;document.getElementById("fUnit").value=m.unit||"conf";
-  document.getElementById("fScad").value=m.scad||"";document.getElementById("fNote").value=m.note||"";
-  locPickerLuogo=m.luogoId;locPickerRipiano=m.ripiano;renderLocPicker();
-  document.getElementById("formTitle").textContent="✏️ Modifica Farmaco";
-  goTo("add");document.getElementById("nav-add").classList.add("on");
-}
-function saveMed(){
-  const nome=document.getElementById("fNome").value.trim();
-  if(!nome){showToast("⚠️ Inserisci il nome","var(--red)");return;}
-  const luogo=settings.luoghi.find(l=>l.id===locPickerLuogo)||null;
-  const m={nome,cat:document.getElementById("fCat").value,forma:document.getElementById("fForma").value,
-    qty:parseFloat(document.getElementById("fQty").value)||1,unit:document.getElementById("fUnit").value,
-    scad:document.getElementById("fScad").value||null,luogoId:luogo?.id||null,luogoNome:luogo?.nome||null,
-    ripiano:locPickerRipiano||null,note:document.getElementById("fNote").value.trim()};
-  if(currentMedId){
-    const idx=meds.findIndex(x=>x.id===currentMedId);
-    if(idx>=0)meds[idx]={...meds[idx],...m};
-    currentMedId=null;
-  }else{meds.unshift({id:genId(),addedAt:Date.now(),...m});}
-  saveM();showToast("✅ Farmaco salvato!");clearForm();goTo("home");
-}
-
-// ── FOTO CONFEZIONE ──
-const GEMINI_PROXY_DEFAULT="https://script.google.com/macros/s/AKfycbwRz-fCJCMY4bvWCu0qUc26KVCF4sfMyrmAzx5yTjDYPgcRT1gikTL4YJm-r-SisUrl/exec";
-function getProxyUrl(){return localStorage.getItem("gemini_proxy_url")||GEMINI_PROXY_DEFAULT;}
-function saveGeminiKey(){
-  const val=document.getElementById("geminiKeyInput").value.trim();
-  if(val)localStorage.setItem("gemini_api_key",val);
-  showToast(val?"✅ Chiave salvata!":"⚠️ Campo vuoto","var(--accent2)");
-}
-function resizeImage(file,maxW,q){
-  return new Promise((res,rej)=>{
-    const img=new Image();
-    img.onload=()=>{const sc=Math.min(1,maxW/img.width);
-      const c=document.createElement("canvas");c.width=Math.round(img.width*sc);c.height=Math.round(img.height*sc);
-      c.getContext("2d").drawImage(img,0,0,c.width,c.height);
-      res(c.toDataURL("image/jpeg",q));};
-    img.onerror=()=>rej(new Error("Immagine non leggibile"));
-    img.src=URL.createObjectURL(file);
-  });
-}
-async function photoLookup(input){
-  const file=input.files[0];if(!file)return;input.value="";
-  const key=localStorage.getItem("gemini_api_key")||"";
-  if(!key){showToast("⚠️ Salva prima l'API key in Impostazioni","var(--red)");return;}
-  showToast("📷 Leggo la confezione...","var(--accent2)");
-  try{
-    const big=await resizeImage(file,1000,.85);
-    const prompt='Questa è la foto della confezione di un farmaco o integratore. Rispondi SOLO con un oggetto JSON, senza testo aggiuntivo né backtick: {"nome":"nome commerciale con dosaggio","scadenza":"YYYY-MM-DD oppure null","forma":"una tra: '+FORME.join(", ")+'","categoria":"una tra: '+Object.keys(CATS).join(", ")+'"}. Se sulla scatola la scadenza indica solo mese e anno, usa il giorno 01 di quel mese. Usa null per i campi non leggibili.';
-    const res=await fetch(getProxyUrl(),{method:"POST",headers:{"Content-Type":"text/plain"},
-      body:JSON.stringify({key,prompt,image:{mime:"image/jpeg",data:big.split(",")[1]}})});
-    if(!res.ok)throw new Error("HTTP "+res.status);
-    const data=await res.json();
-    if(data.error)throw new Error(data.error);
-    const text=data.candidates?.[0]?.content?.parts?.[0]?.text||"";
-    const j=JSON.parse(text.replace(/```json|```/g,"").trim());
-    if(j.nome)document.getElementById("fNome").value=j.nome;
-    if(j.scadenza&&/^\d{4}-\d{2}-\d{2}$/.test(j.scadenza))document.getElementById("fScad").value=j.scadenza;
-    if(j.forma&&FORME.includes(j.forma))document.getElementById("fForma").value=j.forma;
-    if(j.categoria&&CATS[j.categoria])document.getElementById("fCat").value=j.categoria;
-    showToast(j.nome?"✅ Letto: "+String(j.nome).substring(0,28):"⚠️ Confezione poco leggibile","var(--green)");
-  }catch(e){showToast("❌ Lettura fallita: "+e.message,"var(--red)");}
-}
-
-// ── BARCODE → DATABASE APERTI ──
-async function onBarcode(code){
-  showToast("🔎 Cerco "+code+" nei database...","var(--accent2)");
-  const tryDb=async(base)=>{
-    try{
-      const r=await fetch(base+"/api/v2/product/"+code+".json");
-      const d=await r.json();
-      if(d.status===1&&d.product){
-        const p=d.product;
-        return (p.product_name_it||p.product_name||"")+(p.brands?" — "+p.brands.split(",")[0]:"");
-      }
-    }catch(e){}
-    return null;
-  };
-  let nome=await tryDb("https://world.openfoodfacts.org");
-  if(!nome)nome=await tryDb("https://world.openproductsfacts.org");
-  if(nome&&nome.trim()){
-    document.getElementById("fNome").value=nome.trim();
-    showToast("✅ Trovato: "+nome.trim().substring(0,30));
-  }else{
-    showToast("ℹ️ Non nei database aperti: usa 📷 Fotocamera","var(--yellow)");
-  }
-}
-
-// ── SCANNER BARCODE ──
-let _scanStream=null,_scanTimer=null;
-async function openScanner(){
-  if(!("BarcodeDetector" in window)){showToast("⚠️ Scanner non supportato qui: aggiorna Chrome","var(--red)");return;}
-  document.getElementById("scanModal").classList.add("open");
-  try{
-    const det=new BarcodeDetector({formats:["ean_13","ean_8","upc_a"]});
-    _scanStream=await navigator.mediaDevices.getUserMedia({video:{facingMode:"environment"}});
-    const v=document.getElementById("scanVideo");v.srcObject=_scanStream;await v.play();
-    _scanTimer=setInterval(async()=>{
-      try{
-        const codes=await det.detect(v);
-        if(codes.length&&codes[0].rawValue){const c=codes[0].rawValue;closeScanner();onBarcode(c);}
-      }catch(e){}
-    },350);
-  }catch(e){closeScanner();showToast("❌ Fotocamera non accessibile: "+e.message,"var(--red)");}
-}
-function closeScanner(){
-  clearInterval(_scanTimer);_scanTimer=null;
-  if(_scanStream){_scanStream.getTracks().forEach(t=>t.stop());_scanStream=null;}
-  document.getElementById("scanModal").classList.remove("open");
-}
-
-// ── LOC PICKER ──
-function renderLocPicker(){
-  const l=settings.luoghi.find(x=>x.id===locPickerLuogo);
-  let html=`<div class="loc-step"><div class="flabel">Luogo</div><div class="loc-opts">`;
-  settings.luoghi.forEach(loc=>{html+=`<div class="loc-opt${locPickerLuogo===loc.id?" sel":""}" onclick="setLoc('${loc.id}',null)">${esc(loc.nome)}</div>`;});
-  html+=`</div></div>`;
-  if(l&&(l.ripiani||[]).length){
-    html+=`<div class="loc-step"><div class="flabel">Ripiano</div><div class="loc-opts">`;
-    l.ripiani.forEach(r=>{html+=`<div class="loc-opt${locPickerRipiano===r?" sel":""}" onclick="setLoc('${l.id}','${esc(r)}')">${esc(r)}</div>`;});
-    html+=`</div></div>`;
-  }
-  document.getElementById("locPicker").innerHTML=html;
-}
-function setLoc(lid,rip){locPickerLuogo=lid;locPickerRipiano=rip;renderLocPicker();}
-
-// ── IMPOSTAZIONI LUOGHI ──
-function renderStgLuoghi(){
-  document.getElementById("stgLuoghi").innerHTML=settings.luoghi.map((l,li)=>`
-    <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:11px 13px;margin-bottom:8px">
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;gap:6px">
-        ${renameLuogoIdx===li
-          ?`<input type="text" id="renameLuogo_${li}" value="${esc(l.nome)}" style="flex:1;padding:7px 10px;font-size:.85rem" onkeydown="if(event.key==='Enter')saveRenameLuogo(${li})"><button class="btn-sm" onclick="saveRenameLuogo(${li})">💾</button><button class="btn-sm" onclick="renameLuogoIdx=null;renderStgLuoghi()">✕</button>`
-          :`<div style="font-weight:600;font-size:.92rem;flex:1">${esc(l.nome)}</div><button class="btn-sm" onclick="renameLuogoIdx=${li};renderStgLuoghi()">✏️</button><button class="btn-sm" onclick="askConfirm('Eliminare ${esc(l.nome)}?',()=>{settings.luoghi.splice(${li},1);saveS();renderStgLuoghi();})">🗑️</button>`}
-      </div>
-      <div style="display:flex;flex-wrap:wrap;gap:6px">
-        ${(l.ripiani||[]).map((r,ri)=>`<span class="chip" onclick="askConfirm('Eliminare il ripiano ${esc(r)}?',()=>{settings.luoghi[${li}].ripiani.splice(${ri},1);saveS();renderStgLuoghi();})">${esc(r)} ✕</span>`).join("")}
-        <span class="chip" onclick="addRipiano(${li})" style="border-style:dashed">＋ ripiano</span>
-      </div>
-    </div>`).join("");
-}
-function addLuogo(){
-  const val=document.getElementById("newLuogoNome").value.trim();if(!val)return;
-  settings.luoghi.push({id:"l"+genId(),nome:val,ripiani:[]});saveS();
-  document.getElementById("newLuogoNome").value="";renderStgLuoghi();
-}
-function saveRenameLuogo(li){
-  const val=document.getElementById("renameLuogo_"+li)?.value.trim();
-  if(!val){showToast("⚠️ Il nome non può essere vuoto","var(--red)");return;}
-  const l=settings.luoghi[li];if(!l)return;
-  l.nome=val;
-  meds.forEach(m=>{if(m.luogoId===l.id)m.luogoNome=val;});
-  saveS();saveM();renameLuogoIdx=null;renderStgLuoghi();showToast("✅ Luogo rinominato!");
-}
-function addRipiano(li){
-  const l=settings.luoghi[li];const n=(l.ripiani||[]).length+1;
-  l.ripiani=l.ripiani||[];l.ripiani.push("Ripiano "+n);saveS();renderStgLuoghi();
-}
-
-// ── SINCRONIZZAZIONE ──
-function getSyncCfg(){
-  try{const c=JSON.parse(localStorage.getItem("armadietto_sync_cfg")||"null");if(c)return c;}catch{}
-  return{url:"",pin:"",auto:false,lastTs:0};
-}
-function saveSyncCfg(c){localStorage.setItem("armadietto_sync_cfg",JSON.stringify(c));}
-function fillSyncForm(){
-  const c=getSyncCfg();
-  document.getElementById("syncUrlInput").value=c.url;
-  document.getElementById("syncPinInput").value=c.pin;
-  document.getElementById("syncAutoInput").checked=c.auto;
-  document.getElementById("syncLastInfo").textContent=c.lastTs?"Ultima sincronizzazione: "+new Date(c.lastTs).toLocaleString("it-IT"):"Mai sincronizzato da questo dispositivo";
-  document.getElementById("geminiKeyInput").value=localStorage.getItem("gemini_api_key")||"";
-}
-function saveSyncSettings(){
-  const c=getSyncCfg();
-  c.url=document.getElementById("syncUrlInput").value.trim();
-  c.pin=document.getElementById("syncPinInput").value.trim();
-  c.auto=document.getElementById("syncAutoInput").checked;
-  saveSyncCfg(c);showToast("✅ Configurazione salvata!");
-}
-function syncReady(c,silent){
-  if(!c.url||!c.pin){if(!silent)showToast("⚠️ Configura URL e PIN prima","var(--red)");return false;}
-  return true;
-}
-async function syncUpload(silent){
-  const c=getSyncCfg();if(!syncReady(c,silent))return;
-  if(!silent)showToast("☁️ Invio in corso...","var(--accent2)");
-  try{
-    const ts=Date.now();
-    const res=await fetch(c.url,{method:"POST",headers:{"Content-Type":"text/plain"},
-      body:JSON.stringify({pin:c.pin,ts,data:{meds,luoghi:settings.luoghi}})});
-    const j=await res.json();
-    if(!j.ok)throw new Error(j.error||"Errore sconosciuto");
-    c.lastTs=j.ts;saveSyncCfg(c);
-    const info=document.getElementById("syncLastInfo");
-    if(info)info.textContent="Ultima sincronizzazione: "+new Date(j.ts).toLocaleString("it-IT");
-    if(!silent)showToast("✅ Dati inviati al cloud!");
-  }catch(e){if(!silent)showToast("❌ Invio fallito: "+e.message,"var(--red)");}
-}
-async function syncDownload(ask){
-  const c=getSyncCfg();if(!syncReady(c,!ask))return;
-  const doIt=async()=>{
-    if(ask)showToast("☁️ Scaricamento...","var(--accent2)");
-    try{
-      const res=await fetch(c.url+"?action=load&pin="+encodeURIComponent(c.pin));
-      const j=await res.json();
-      if(!j.ok)throw new Error(j.error||"Errore sconosciuto");
-      if(!j.data){if(ask)showToast("ℹ️ Nessun dato sul cloud: invia prima ⬆️","var(--yellow)");return;}
-      if(!ask&&j.ts<=c.lastTs)return;
-      if(j.data.meds)meds=j.data.meds;
-      if(j.data.luoghi)settings.luoghi=j.data.luoghi;
-      localStorage.setItem("armadietto_v1",JSON.stringify(meds));
-      localStorage.setItem("armadietto_settings_v1",JSON.stringify(settings));
-      c.lastTs=j.ts;saveSyncCfg(c);
-      refreshView();
-      showToast("✅ Dati aggiornati dal cloud!");
-    }catch(e){if(ask)showToast("❌ Scaricamento fallito: "+e.message,"var(--red)");}
-  };
-  if(ask)askConfirm("Scaricare dal cloud? I dati su questo dispositivo verranno sostituiti.",doIt);
-  else doIt();
-}
-let _syncUpTimer=null;
-function scheduleAutoUpload(){
-  const c=getSyncCfg();if(!c.auto||!c.url||!c.pin)return;
-  clearTimeout(_syncUpTimer);
-  _syncUpTimer=setTimeout(()=>syncUpload(true),4000);
-}
-
-// ── DATI ──
-function exportData(){
-  const blob=new Blob([JSON.stringify({meds,luoghi:settings.luoghi},null,2)],{type:"application/json"});
-  const a=document.createElement("a");a.href=URL.createObjectURL(blob);
-  a.download="armadietto_backup_"+new Date().toISOString().slice(0,10)+".json";a.click();
-  showToast("📤 Backup scaricato!");
-}
-function importData(input){
-  const file=input.files[0];if(!file)return;
-  const reader=new FileReader();
-  reader.onload=e=>{
-    try{
-      const data=JSON.parse(e.target.result);
-      askConfirm("Importare il backup? I dati attuali verranno sostituiti.",()=>{
-        if(data.meds)meds=data.meds;
-        if(data.luoghi)settings.luoghi=data.luoghi;
-        saveM();saveS();goTo("home");showToast("📥 Backup importato!");
-      });
-    }catch{showToast("❌ File non valido","var(--red)");}
-  };
-  reader.readAsText(file);input.value="";
-}
-
-// ── INIT ──
-load();buildSelects();clearForm();renderHome();
-(function(){const c=getSyncCfg();if(c.auto&&c.url&&c.pin)setTimeout(()=>syncDownload(false),1200);})();
-setTimeout(()=>{const s=document.getElementById("splash");s.style.opacity="0";setTimeout(()=>s.remove(),600);},1500);
+const K='armadietto_v5';
+let db=loadDb(), area='Umani', mode='az', editMedId=null, editTherapyId=null, atcTimer=null, currentAtc={full:'',atc2:'',name:''}, scanStream=null, scanTimer=null;
+function defaultDb(){return {version:5,meds:[],subjects:[{id:'luca',name:'Luca',type:'Umano'},{id:'daniela',name:'Daniela',type:'Umano'},{id:'ciak',name:'Ciak',type:'Peloso'}],therapies:[],takes:[],locations:['Armadietto bagno · Ripiano 1'],settings:{theme:'nordic',apiUrl:'',syncPin:'',syncAuto:false}}}
+function loadDb(){try{const x=JSON.parse(localStorage.getItem(K));if(x)return {...defaultDb(),...x,settings:{...defaultDb().settings,...(x.settings||{})}}}catch{}return migrateOld()}
+function migrateOld(){const d=defaultDb();try{const old=JSON.parse(localStorage.getItem('armadietto_v1')||'[]');if(Array.isArray(old)&&old.length){d.meds=old.map(x=>({id:x.id||id(),area:'Umani',name:x.nome||'Farmaco',active:'',strength:'',form:x.forma||'Altro',route:'Orale',qty:+x.qty||1,unit:x.unit||'conf',min:0,expiry:x.scad||'',barcode:'',location:x.luogoNome?x.luogoNome+(x.ripiano?' · '+x.ripiano:''):'',notes:x.note||'',atc:'',atc2:'',atc2Name:'',vetCat:x.cat||'',addedAt:x.addedAt||Date.now()}));localStorage.setItem(K,JSON.stringify(d))}}catch{}return d}
+function save(){localStorage.setItem(K,JSON.stringify(db));if(db.settings.syncAuto)debounceCloud()}
+function id(){return Date.now().toString(36)+Math.random().toString(36).slice(2,7)}
+function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function showToast(s){const t=document.getElementById('toast');t.textContent=s;t.classList.add('show');clearTimeout(t._x);t._x=setTimeout(()=>t.classList.remove('show'),2600)}
+function todayStr(){const d=new Date();return [d.getFullYear(),String(d.getMonth()+1).padStart(2,'0'),String(d.getDate()).padStart(2,'0')].join('-')}
+function parseLocalDate(s){if(!s)return null;const [y,m,d]=s.split('-').map(Number);return new Date(y,m-1,d)}
+function daysTo(s){const d=parseLocalDate(s);if(!d)return null;const now=parseLocalDate(todayStr());return Math.ceil((d-now)/86400000)}
+function go(p){document.querySelectorAll('.section').forEach(x=>x.classList.remove('active'));document.getElementById(p).classList.add('active');document.querySelectorAll('.ni').forEach(x=>x.classList.toggle('on',x.dataset.page===p));if(p==='home')renderHome();if(p==='farmaci')renderMeds();if(p==='scadenze')renderExpiry();if(p==='terapie')renderTherapies();if(p==='settings')renderSettings();window.scrollTo(0,0)}
+function closeOverlay(id){document.getElementById(id).classList.remove('show')}
+function setArea(a){area=a;document.getElementById('chipU').classList.toggle('on',a==='Umani');document.getElementById('chipP').classList.toggle('on',a==='Pelosi');renderMeds()}
+function setMode(m){mode=m;document.getElementById('modeAZ').classList.toggle('on',m==='az');document.getElementById('modeCAT').classList.toggle('on',m==='cat');renderMeds()}
+function medCategory(m){return m.area==='Umani'?(m.atc2?m.atc2+' · '+m.atc2Name:'ATC da associare'):(m.vetCat||'Senza categoria')}
+function medCard(m,click=true){const d=daysTo(m.expiry);let ex=m.expiry?new Date(m.expiry+'T00:00:00').toLocaleDateString('it-IT'):'Senza scadenza';let cls=d!==null&&d<0?'bad':d!==null&&d<=90?'warn':'';return `<div class="prod card ${click?'click':''}" ${click?`onclick="editMed('${m.id}')"`:''}><div class="pill">${m.area==='Umani'?'💊':'🐾'}</div><div class="prod-main"><div class="prod-name">${esc(m.name)}</div><div class="meta">${esc(m.form||'')} ${m.strength?'· '+esc(m.strength):''}</div><span class="badge">${esc(medCategory(m))}</span></div><div class="qty">${esc(m.qty)} ${esc(m.unit)}<div class="${cls}" style="margin-top:4px">${esc(ex)}</div></div></div>`}
+function renderMeds(){const q=(document.getElementById('medSearch')?.value||'').toLowerCase();let a=db.meds.filter(m=>m.area===area&&(m.name+' '+(m.active||'')).toLowerCase().includes(q)).sort((x,y)=>x.name.localeCompare(y.name,'it'));const el=document.getElementById('medList');if(!a.length){el.innerHTML='<div class="empty"><div class="big">⚕️</div>Nessun farmaco.</div>';return}if(mode==='az'){el.innerHTML=a.map(m=>medCard(m)).join('');return}const g={};a.forEach(m=>(g[medCategory(m)]??=[]).push(m));el.innerHTML=Object.keys(g).sort((x,y)=>x.localeCompare(y,'it')).map(k=>`<div class="card acc"><div class="acc-h" onclick="this.parentElement.classList.toggle('open')"><div class="acc-t">${esc(k)}</div><div class="small">${g[k].length}</div><div class="chev">›</div></div><div class="acc-b">${g[k].map(m=>medCard(m)).join('')}</div></div>`).join('')}
+function renderHome(){const expired=db.meds.filter(m=>daysTo(m.expiry)!==null&&daysTo(m.expiry)<0).length, soon=db.meds.filter(m=>{const d=daysTo(m.expiry);return d!==null&&d>=0&&d<=90}).length, nodate=db.meds.filter(m=>!m.expiry).length;document.getElementById('homeStats').innerHTML=`<div class="stat card"><div class="stat-ico">⚕️</div><div class="stat-n">${db.meds.length}</div><div class="stat-l">Farmaci totali</div></div><div class="stat card"><div class="stat-ico">🚫</div><div class="stat-n">${expired}</div><div class="stat-l">Scaduti</div></div><div class="stat card"><div class="stat-ico">⌛</div><div class="stat-n">${soon}</div><div class="stat-l">In scadenza (90 gg)</div></div><div class="stat card"><div class="stat-ico">❓</div><div class="stat-n">${nodate}</div><div class="stat-l">Senza data</div></div>`;const pend=getTodayDoses().filter(x=>!x.taken);document.getElementById('todayPending').innerHTML=pend.length?pend.map(x=>`<div class="prod card"><div class="pill">${x.subject.type==='Peloso'?'🐾':'👤'}</div><div class="prod-main"><div class="prod-name">${esc(x.subject.name)} · ${esc(x.med.name)}</div><div class="meta">${esc(x.therapy.dose)} · ore ${esc(x.time)}</div><span class="badge">Da assumere</span></div><button class="btn-s" onclick="markTaken('${x.therapy.id}','${x.time}')">✓ Presa</button></div>`).join(''):'<div class="note">Nessuna assunzione ancora da prendere oggi.</div>';const r=[...db.meds].sort((a,b)=>(b.addedAt||0)-(a.addedAt||0)).slice(0,4);document.getElementById('recentMeds').innerHTML=r.length?r.map(m=>medCard(m)).join(''):'<div class="empty"><div class="big">⚕️</div>Armadietto vuoto.<br>Tocca ✚ per il primo farmaco.</div>'}
+function renderExpiry(){const a=[...db.meds].sort((x,y)=>(x.expiry||'9999').localeCompare(y.expiry||'9999'));document.getElementById('expiryList').innerHTML=a.length?a.map(m=>medCard(m)).join(''):'<div class="empty">Nessun farmaco.</div>'}
+function fillLocations(){document.getElementById('fLocation').innerHTML='<option value="">—</option>'+db.locations.map(x=>`<option>${esc(x)}</option>`).join('')}
+function newMed(){editMedId=null;currentAtc={full:'',atc2:'',name:''};document.getElementById('medFormTitle').textContent='Aggiungi farmaco';['fName','fActive','fStrength','fExpiry','fBarcode','fNotes','fVetCat'].forEach(i=>document.getElementById(i).value='');document.getElementById('fArea').value='Umani';document.getElementById('fQty').value=1;document.getElementById('fMin').value=0;document.getElementById('fForm').value='Compresse';document.getElementById('fRoute').value='Orale';fillLocations();document.getElementById('fLocation').value='';document.getElementById('medDeleteBtn').style.display='none';onAreaChange();updateAtcBox();go('add')}
+function editMed(mid){const m=db.meds.find(x=>x.id===mid);if(!m)return;editMedId=mid;currentAtc={full:m.atc||'',atc2:m.atc2||'',name:m.atc2Name||''};document.getElementById('medFormTitle').textContent='Modifica farmaco';document.getElementById('fArea').value=m.area;document.getElementById('fName').value=m.name||'';document.getElementById('fActive').value=m.active||'';document.getElementById('fStrength').value=m.strength||'';document.getElementById('fForm').value=m.form||'Altro';document.getElementById('fRoute').value=m.route||'Orale';document.getElementById('fQty').value=m.qty??1;document.getElementById('fUnit').value=m.unit||'conf';document.getElementById('fMin').value=m.min??0;document.getElementById('fExpiry').value=m.expiry||'';document.getElementById('fBarcode').value=m.barcode||'';document.getElementById('fVetCat').value=m.vetCat||'';document.getElementById('fNotes').value=m.notes||'';fillLocations();document.getElementById('fLocation').value=m.location||'';document.getElementById('medDeleteBtn').style.display='block';onAreaChange();updateAtcBox();go('add')}
+function onAreaChange(){const human=document.getElementById('fArea').value==='Umani';document.getElementById('atcBox').style.display=human?'block':'none';document.getElementById('vetCatWrap').style.display=human?'none':'block'}
+function saveMed(){const name=document.getElementById('fName').value.trim();if(!name)return showToast('Inserisci il nome');const areaV=document.getElementById('fArea').value;const m={area:areaV,name,active:document.getElementById('fActive').value.trim(),strength:document.getElementById('fStrength').value.trim(),form:document.getElementById('fForm').value,route:document.getElementById('fRoute').value,qty:+document.getElementById('fQty').value||0,unit:document.getElementById('fUnit').value,min:+document.getElementById('fMin').value||0,expiry:document.getElementById('fExpiry').value,barcode:document.getElementById('fBarcode').value.trim(),location:document.getElementById('fLocation').value,notes:document.getElementById('fNotes').value.trim(),atc:areaV==='Umani'?currentAtc.full:'',atc2:areaV==='Umani'?currentAtc.atc2:'',atc2Name:areaV==='Umani'?currentAtc.name:'',vetCat:areaV==='Pelosi'?document.getElementById('fVetCat').value.trim():''};if(editMedId){const i=db.meds.findIndex(x=>x.id===editMedId);db.meds[i]={...db.meds[i],...m}}else db.meds.unshift({id:id(),addedAt:Date.now(),...m});save();showToast('Farmaco salvato');go('home')}
+function snapshotTherapyHistory(t){if(!t)return;const s=db.subjects.find(x=>x.id===t.subjectId),m=db.meds.find(x=>x.id===t.medId);db.takes.forEach(x=>{if(x.therapyId===t.id){x.subjectId=x.subjectId||t.subjectId;x.subjectName=x.subjectName||(s?.name||'');x.medName=x.medName||(m?.name||'Farmaco');x.dose=x.dose||t.dose||''}})}
+function deleteCurrentMed(){if(!editMedId||!confirm('Eliminare questo farmaco?'))return;db.therapies.filter(x=>x.medId===editMedId).forEach(snapshotTherapyHistory);db.meds=db.meds.filter(x=>x.id!==editMedId);db.therapies=db.therapies.filter(x=>x.medId!==editMedId);save();editMedId=null;showToast('Farmaco eliminato');go('farmaci')}
+function normalize(s){return String(s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toUpperCase().replace(/[^A-Z0-9]+/g,' ').trim()}
+function scheduleAtc(){if(document.getElementById('fArea').value!=='Umani')return;clearTimeout(atcTimer);currentAtc={full:'',atc2:'',name:''};updateAtcBox();const q=document.getElementById('fName').value.trim();if(q.length<3)return;document.getElementById('atcState').textContent='Ricerca AIFA…';atcTimer=setTimeout(()=>lookupAtc(q),650)}
+async function lookupAtc(q){const url=db.settings.apiUrl;if(!url){document.getElementById('atcState').textContent='Configura prima l’URL Apps Script in Impostazioni.';return}try{const r=await fetch(url+'?action=aifaSearch&q='+encodeURIComponent(q));const j=await r.json();if(!j.ok)throw new Error(j.error||'Ricerca fallita');const a=j.results||[];if(!a.length){document.getElementById('atcValue').textContent='Nessuna categoria trovata';document.getElementById('atcState').textContent='Prova nome commerciale + dosaggio o principio attivo.';return}if(a.length===1){applyAtc(a[0]);document.getElementById('atcState').innerHTML='<span class="ok">Categoria trovata automaticamente</span> · AIFA';return}document.getElementById('atcValue').textContent='Più categorie possibili';document.getElementById('atcState').textContent='Scegli il risultato corretto:';document.getElementById('atcChoices').innerHTML=a.slice(0,6).map((x,i)=>`<button class="btn-s" onclick='applyAtc(${JSON.stringify(x).replace(/'/g,"&#39;")})'>${esc(x.atc2)} · ${esc(x.atc2Name)}</button>`).join('')}catch(e){document.getElementById('atcState').textContent='Ricerca non disponibile: '+e.message}}
+function applyAtc(x){currentAtc={full:x.atc||'',atc2:x.atc2||'',name:x.atc2Name||''};if(x.active&&!document.getElementById('fActive').value)document.getElementById('fActive').value=x.active;if(x.strength&&!document.getElementById('fStrength').value)document.getElementById('fStrength').value=x.strength;updateAtcBox()}
+function updateAtcBox(){document.getElementById('atcChoices').innerHTML='';if(currentAtc.atc2){document.getElementById('atcValue').textContent=currentAtc.atc2+' · '+currentAtc.name;document.getElementById('atcState').textContent=currentAtc.full?'ATC completo: '+currentAtc.full:'Categoria associata'}else{document.getElementById('atcValue').textContent='In attesa del nome del farmaco';document.getElementById('atcState').textContent='Digita almeno 3 caratteri.'}}
+function therapyActiveToday(t){const td=todayStr();if(t.start&&td<t.start)return false;if(t.end&&td>t.end)return false;const day=new Date().getDay();if(t.freq==='weekdays'&&(day===0||day===6))return false;if(t.freq==='weekends'&&day!==0&&day!==6)return false;return true}
+function getTodayDoses(){const td=todayStr(),out=[];db.therapies.filter(therapyActiveToday).forEach(t=>{const s=db.subjects.find(x=>x.id===t.subjectId),m=db.meds.find(x=>x.id===t.medId);if(!s||!m)return;(t.times||[]).forEach(time=>out.push({therapy:t,subject:s,med:m,time,taken:db.takes.some(z=>z.therapyId===t.id&&z.date===td&&z.time===time)}))});return out.sort((a,b)=>a.time.localeCompare(b.time))}
+function markTaken(tid,time){const td=todayStr();if(db.takes.some(x=>x.therapyId===tid&&x.date===td&&x.time===time))return;const t=db.therapies.find(x=>x.id===tid),s=t&&db.subjects.find(x=>x.id===t.subjectId),m=t&&db.meds.find(x=>x.id===t.medId);if(!t||!s||!m)return showToast('Terapia non trovata');db.takes.push({id:id(),therapyId:tid,subjectId:s.id,subjectName:s.name,medName:m.name,dose:t.dose,date:td,time,takenAt:new Date().toISOString()});save();renderHome();showToast('Assunzione registrata')}
+function renderTherapies(){const el=document.getElementById('therapyGroups');el.innerHTML=db.subjects.map(s=>{const ts=db.therapies.filter(t=>t.subjectId===s.id);return `<div class="card acc"><div class="acc-h" onclick="this.parentElement.classList.toggle('open')"><div class="avatar">${s.type==='Peloso'?'🐾':'👤'}</div><div class="acc-t">${esc(s.name)}</div><div class="small">${ts.length} attive</div><div class="chev">›</div></div><div class="acc-b">${ts.length?ts.map(t=>{const m=db.meds.find(x=>x.id===t.medId);return `<div class="prod card click" style="box-shadow:none;margin-bottom:7px" onclick="editTherapy('${t.id}')"><div class="pill">💊</div><div class="prod-main"><div class="prod-name">${esc(m?.name||'Farmaco')}</div><div class="meta">${esc(t.dose)} · ${(t.times||[]).map(esc).join(', ')}</div><span class="badge">Attiva</span></div></div>`}).join(''):'<div class="note">Nessuna terapia attiva.</div>'}<button class="btn-s" style="width:100%;margin-top:9px" onclick="event.stopPropagation();openHistory('${s.id}')">🕘 Storico assunzioni</button></div></div>`}).join('')}
+function openHistory(sid){const s=db.subjects.find(x=>x.id===sid);document.getElementById('historyTitle').textContent='Storico assunzioni · '+(s?.name||'');const rows=db.takes.map(x=>{const t=db.therapies.find(z=>z.id===x.therapyId),subjectId=x.subjectId||t?.subjectId;if(subjectId!==sid)return null;const m=t&&db.meds.find(z=>z.id===t.medId);return {...x,dose:x.dose||t?.dose||'',med:x.medName||m?.name||'Farmaco'}}).filter(Boolean).sort((a,b)=>(b.date+b.time).localeCompare(a.date+a.time));const groups={};rows.forEach(r=>(groups[r.date]??=[]).push(r));document.getElementById('historyContent').innerHTML=rows.length?Object.entries(groups).map(([d,a])=>`<div class="history-day">${parseLocalDate(d).toLocaleDateString('it-IT',{weekday:'long',day:'numeric',month:'long',year:'numeric'})}</div>${a.map(r=>`<div class="prod card"><div class="history-time">${esc(r.time)}</div><div class="prod-main"><div class="prod-name">${esc(r.med)}</div><div class="meta">${esc(r.dose)}</div></div><div class="history-status">✓ Presa</div></div>`).join('')}`).join(''):'<div class="note">Nessuna assunzione registrata.</div>';document.getElementById('historyModal').classList.add('show')}
+function fillTherapySubjects(){document.getElementById('tSubject').innerHTML=db.subjects.map(s=>`<option value="${s.id}">${esc(s.name)} · ${s.type}</option>`).join('')}
+function fillTherapyMeds(){const s=db.subjects.find(x=>x.id===document.getElementById('tSubject').value);const areaV=s?.type==='Peloso'?'Pelosi':'Umani';document.getElementById('tMed').innerHTML=db.meds.filter(m=>m.area===areaV).sort((a,b)=>a.name.localeCompare(b.name,'it')).map(m=>`<option value="${m.id}">${esc(m.name)}</option>`).join('')}
+function openTherapyForm(){editTherapyId=null;fillTherapySubjects();fillTherapyMeds();document.getElementById('therapyFormTitle').textContent='Nuova terapia';document.getElementById('tDose').value='';document.getElementById('tTimes').value='08:00';document.getElementById('tStart').value=todayStr();document.getElementById('tEnd').value='';document.getElementById('tFreq').value='daily';document.getElementById('therapyDeleteBtn').style.display='none';document.getElementById('therapyModal').classList.add('show')}
+function editTherapy(tid){const t=db.therapies.find(x=>x.id===tid);if(!t)return;editTherapyId=tid;fillTherapySubjects();document.getElementById('tSubject').value=t.subjectId;fillTherapyMeds();document.getElementById('tMed').value=t.medId;document.getElementById('tDose').value=t.dose||'';document.getElementById('tTimes').value=(t.times||[]).join(', ');document.getElementById('tStart').value=t.start||'';document.getElementById('tEnd').value=t.end||'';document.getElementById('tFreq').value=t.freq||'daily';document.getElementById('therapyFormTitle').textContent='Modifica terapia';document.getElementById('therapyDeleteBtn').style.display='block';document.getElementById('therapyModal').classList.add('show')}
+function saveTherapy(){const subjectId=document.getElementById('tSubject').value,medId=document.getElementById('tMed').value,dose=document.getElementById('tDose').value.trim(),times=document.getElementById('tTimes').value.split(',').map(x=>x.trim()).filter(x=>/^\d{1,2}:\d{2}$/.test(x)).map(x=>x.padStart(5,'0'));if(!subjectId||!medId||!dose||!times.length)return showToast('Completa soggetto, farmaco, dose e orari');const x={subjectId,medId,dose,times,start:document.getElementById('tStart').value||todayStr(),end:document.getElementById('tEnd').value,freq:document.getElementById('tFreq').value};if(editTherapyId){const i=db.therapies.findIndex(z=>z.id===editTherapyId);db.therapies[i]={...db.therapies[i],...x}}else db.therapies.push({id:id(),...x});save();closeOverlay('therapyModal');renderTherapies();renderHome();showToast('Terapia salvata')}
+function deleteTherapy(){if(!editTherapyId||!confirm('Eliminare la terapia? Lo storico già registrato verrà mantenuto.'))return;snapshotTherapyHistory(db.therapies.find(x=>x.id===editTherapyId));db.therapies=db.therapies.filter(x=>x.id!==editTherapyId);save();closeOverlay('therapyModal');renderTherapies()}
+function renderSettings(){document.getElementById('apiUrl').value=db.settings.apiUrl||'';document.getElementById('syncPin').value=db.settings.syncPin||'';document.getElementById('syncAuto').checked=!!db.settings.syncAuto;document.getElementById('geminiKey').value=localStorage.getItem('gemini_api_key')||'';document.getElementById('subjectList').innerHTML=db.subjects.map(s=>`<div class="prod card" style="box-shadow:none;margin-bottom:6px"><div class="avatar">${s.type==='Peloso'?'🐾':'👤'}</div><div class="prod-main"><div class="prod-name">${esc(s.name)}</div><div class="meta">${s.type}</div></div><button class="btn-d" onclick="removeSubject('${s.id}')">✕</button></div>`).join('');document.getElementById('locationList').innerHTML=db.locations.map((x,i)=>`<div class="prod card" style="box-shadow:none;margin-bottom:6px"><div class="pill">📍</div><div class="prod-main">${esc(x)}</div><button class="btn-d" onclick="removeLocation(${i})">✕</button></div>`).join('');document.querySelectorAll('.theme').forEach(x=>x.classList.toggle('on',x.dataset.theme===db.settings.theme))}
+function addSubject(){const n=document.getElementById('newSubjectName').value.trim();if(!n)return;db.subjects.push({id:id(),name:n,type:document.getElementById('newSubjectType').value});document.getElementById('newSubjectName').value='';save();renderSettings()}
+function removeSubject(sid){if(db.therapies.some(t=>t.subjectId===sid))return showToast('Elimina prima le terapie di questo soggetto');db.subjects=db.subjects.filter(x=>x.id!==sid);save();renderSettings()}
+function addLocation(){const n=document.getElementById('newLocation').value.trim();if(!n)return;db.locations.push(n);document.getElementById('newLocation').value='';save();renderSettings()}
+function removeLocation(i){db.locations.splice(i,1);save();renderSettings()}
+function setTheme(t){db.settings.theme=t;document.body.className=t;save();renderSettings()}
+function saveApiUrl(){db.settings.apiUrl=document.getElementById('apiUrl').value.trim();save();showToast('URL salvato')}
+function saveGeminiKey(){localStorage.setItem('gemini_api_key',document.getElementById('geminiKey').value.trim());showToast('Chiave salvata')}
+function saveSyncSettings(){db.settings.syncPin=document.getElementById('syncPin').value.trim();db.settings.syncAuto=document.getElementById('syncAuto').checked;save();showToast('Impostazioni cloud salvate')}
+let cloudTimer=null;function debounceCloud(){clearTimeout(cloudTimer);cloudTimer=setTimeout(()=>cloudUpload(true),1200)}
+async function cloudUpload(silent=false){const url=db.settings.apiUrl,pin=db.settings.syncPin;if(!url||!pin){if(!silent)showToast('Configura URL e PIN');return}try{const r=await fetch(url,{method:'POST',headers:{'Content-Type':'text/plain'},body:JSON.stringify({action:'syncPut',pin,data:db})});const j=await r.json();if(!j.ok)throw new Error(j.error||'Errore');if(!silent)showToast('Backup cloud inviato')}catch(e){if(!silent)showToast('Errore cloud: '+e.message)}}
+async function cloudDownload(){const url=db.settings.apiUrl,pin=db.settings.syncPin;if(!url||!pin)return showToast('Configura URL e PIN');try{const r=await fetch(url+'?action=syncGet&pin='+encodeURIComponent(pin));const j=await r.json();if(!j.ok)throw new Error(j.error||'Errore');if(j.data&&confirm('Sostituire i dati locali con quelli del cloud?')){db={...defaultDb(),...j.data,settings:{...defaultDb().settings,...(j.data.settings||{})}};save();location.reload()}}catch(e){showToast('Errore cloud: '+e.message)}}
+function exportData(){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(db,null,2)],{type:'application/json'}));a.download='armadietto_backup_v5.json';a.click();URL.revokeObjectURL(a.href)}
+function importData(inp){const f=inp.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{const x=JSON.parse(r.result);if(confirm('Importare questo backup?')){db={...defaultDb(),...x,settings:{...defaultDb().settings,...(x.settings||{})}};save();location.reload()}}catch{showToast('File non valido')}};r.readAsText(f);inp.value=''}
+function resizeImage(file,maxW=1000,q=.85){return new Promise((res,rej)=>{const img=new Image();img.onload=()=>{const sc=Math.min(1,maxW/img.width),c=document.createElement('canvas');c.width=Math.round(img.width*sc);c.height=Math.round(img.height*sc);c.getContext('2d').drawImage(img,0,0,c.width,c.height);res(c.toDataURL('image/jpeg',q))};img.onerror=()=>rej(new Error('Immagine non leggibile'));img.src=URL.createObjectURL(file)})}
+async function photoLookup(inp){const f=inp.files[0];if(!f)return;inp.value='';const key=localStorage.getItem('gemini_api_key')||'',url=db.settings.apiUrl;if(!key||!url)return showToast('Configura Apps Script e chiave Gemini');showToast('Leggo la confezione…');try{const big=await resizeImage(f),prompt='Leggi questa confezione di medicinale. Rispondi SOLO JSON: {"name":"nome commerciale","active":"principio attivo se leggibile","strength":"dosaggio se leggibile","expiry":"YYYY-MM-DD oppure null","form":"Compresse|Capsule|Bustine|Gocce|Sciroppo|Crema|Soluzione|Altro"}. Non inventare campi non leggibili.';const r=await fetch(url,{method:'POST',headers:{'Content-Type':'text/plain'},body:JSON.stringify({action:'gemini',key,prompt,image:big.split(',')[1]})});const j=await r.json();if(!j.ok)throw new Error(j.error||'Errore');const x=j.result||{};if(x.name)document.getElementById('fName').value=x.name;if(x.active)document.getElementById('fActive').value=x.active;if(x.strength)document.getElementById('fStrength').value=x.strength;if(x.expiry)document.getElementById('fExpiry').value=x.expiry;if(x.form&&[...document.getElementById('fForm').options].some(o=>o.value===x.form))document.getElementById('fForm').value=x.form;scheduleAtc();showToast('Confezione letta')}catch(e){showToast('Lettura fallita: '+e.message)}}
+async function openScanner(){if(!('BarcodeDetector'in window))return showToast('Scanner non supportato: usa Chrome aggiornato');document.getElementById('scanModal').classList.add('show');try{const formats=(await BarcodeDetector.getSupportedFormats()).filter(x=>['ean_13','ean_8','upc_a','upc_e','code_128','data_matrix'].includes(x));const det=new BarcodeDetector({formats});scanStream=await navigator.mediaDevices.getUserMedia({video:{facingMode:'environment'}});const v=document.getElementById('scanVideo');v.srcObject=scanStream;await v.play();scanTimer=setInterval(async()=>{try{const a=await det.detect(v);if(a.length&&a[0].rawValue){const code=a[0].rawValue;closeScanner();document.getElementById('fBarcode').value=code;showToast('Codice acquisito: '+code)}}catch{}},350)}catch(e){closeScanner();showToast('Fotocamera non accessibile')}}
+function closeScanner(){clearInterval(scanTimer);scanTimer=null;if(scanStream){scanStream.getTracks().forEach(t=>t.stop());scanStream=null}document.getElementById('scanModal').classList.remove('show')}
+document.body.className=db.settings.theme||'nordic';
+if('serviceWorker'in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});
+renderHome();
 </script>
 </body>
 </html>
