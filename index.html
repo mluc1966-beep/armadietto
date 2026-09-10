@@ -47,7 +47,7 @@ nav{position:fixed;bottom:0;left:0;right:0;z-index:100;display:flex;background:v
 <body class="nordic">
 <header>
 <div class="logo-icon">⚕️</div>
-<div><h1>Armadietto Medicinali</h1><div class="version">v5.0.1 · I miei farmaci</div></div>
+<div><h1>Armadietto Medicinali</h1><div class="version">v5.0.3 · I miei farmaci</div></div>
 <button class="ibtn" onclick="go('settings')">⚙️</button>
 </header>
 <main>
@@ -137,10 +137,11 @@ nav{position:fixed;bottom:0;left:0;right:0;z-index:100;display:flex;background:v
 <script>
 const K='armadietto_v5';
 let db=loadDb(), area='Umani', mode='az', editMedId=null, editTherapyId=null, atcTimer=null, currentAtc={full:'',atc2:'',name:''}, scanStream=null, scanTimer=null;
-function defaultDb(){return {version:5,meds:[],subjects:[{id:'luca',name:'Luca',type:'Umano'},{id:'daniela',name:'Daniela',type:'Umano'},{id:'ciak',name:'Ciak',type:'Peloso'}],therapies:[],takes:[],locations:['Armadietto bagno · Ripiano 1'],settings:{theme:'nordic',apiUrl:'',syncPin:'',syncAuto:false}}}
+function defaultDb(){return {version:5,updatedAt:'',meds:[],subjects:[{id:'luca',name:'Luca',type:'Umano'},{id:'daniela',name:'Daniela',type:'Umano'},{id:'ciak',name:'Ciak',type:'Peloso'}],therapies:[],takes:[],locations:['Armadietto bagno · Ripiano 1'],settings:{theme:'nordic',apiUrl:'',syncPin:'',syncAuto:false}}}
 function loadDb(){try{const x=JSON.parse(localStorage.getItem(K));if(x)return {...defaultDb(),...x,settings:{...defaultDb().settings,...(x.settings||{})}}}catch{}return migrateOld()}
 function migrateOld(){const d=defaultDb();try{const old=JSON.parse(localStorage.getItem('armadietto_v1')||'[]');if(Array.isArray(old)&&old.length){d.meds=old.map(x=>({id:x.id||id(),area:'Umani',name:x.nome||'Farmaco',active:'',strength:'',form:x.forma||'Altro',route:'Orale',qty:+x.qty||1,unit:x.unit||'conf',min:0,expiry:x.scad||'',barcode:'',location:x.luogoNome?x.luogoNome+(x.ripiano?' · '+x.ripiano:''):'',notes:x.note||'',atc:'',atc2:'',atc2Name:'',vetCat:x.cat||'',addedAt:x.addedAt||Date.now()}));localStorage.setItem(K,JSON.stringify(d))}}catch{}return d}
-function save(){localStorage.setItem(K,JSON.stringify(db));if(db.settings.syncAuto)debounceCloud()}
+function persist(){localStorage.setItem(K,JSON.stringify(db))}
+function save(){db.updatedAt=new Date().toISOString();persist();if(db.settings.syncAuto)debounceCloud()}
 function id(){return Date.now().toString(36)+Math.random().toString(36).slice(2,7)}
 function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 function showToast(s){const t=document.getElementById('toast');t.textContent=s;t.classList.add('show');clearTimeout(t._x);t._x=setTimeout(()=>t.classList.remove('show'),2600)}
@@ -185,12 +186,14 @@ function removeSubject(sid){if(db.therapies.some(t=>t.subjectId===sid))return sh
 function addLocation(){const n=document.getElementById('newLocation').value.trim();if(!n)return;db.locations.push(n);document.getElementById('newLocation').value='';save();renderSettings()}
 function removeLocation(i){db.locations.splice(i,1);save();renderSettings()}
 function setTheme(t){db.settings.theme=t;document.body.className=t;save();renderSettings()}
-function saveApiUrl(){db.settings.apiUrl=document.getElementById('apiUrl').value.trim();save();showToast('URL salvato')}
+function saveApiUrl(){db.settings.apiUrl=document.getElementById('apiUrl').value.trim();persist();showToast('URL salvato')}
 function saveGeminiKey(){localStorage.setItem('gemini_api_key',document.getElementById('geminiKey').value.trim());showToast('Chiave salvata')}
-function saveSyncSettings(){db.settings.syncPin=document.getElementById('syncPin').value.trim();db.settings.syncAuto=document.getElementById('syncAuto').checked;save();showToast('Impostazioni cloud salvate')}
+function saveSyncSettings(){db.settings.syncPin=document.getElementById('syncPin').value.trim();db.settings.syncAuto=document.getElementById('syncAuto').checked;persist();showToast('Impostazioni cloud salvate');if(db.settings.syncAuto)setTimeout(()=>autoCloudSync(false),100)}
 let cloudTimer=null;function debounceCloud(){clearTimeout(cloudTimer);cloudTimer=setTimeout(()=>cloudUpload(true),1200)}
 async function cloudUpload(silent=false){const url=db.settings.apiUrl,pin=db.settings.syncPin;if(!url||!pin){if(!silent)showToast('Configura URL e PIN');return}try{const r=await fetch(url,{method:'POST',headers:{'Content-Type':'text/plain'},body:JSON.stringify({action:'syncPut',pin,data:db})});const j=await r.json();if(!j.ok)throw new Error(j.error||'Errore');if(!silent)showToast('Backup cloud inviato')}catch(e){if(!silent)showToast('Errore cloud: '+e.message)}}
-async function cloudDownload(){const url=db.settings.apiUrl,pin=db.settings.syncPin;if(!url||!pin)return showToast('Configura URL e PIN');try{const r=await fetch(url+'?action=syncGet&pin='+encodeURIComponent(pin));const j=await r.json();if(!j.ok)throw new Error(j.error||'Errore');if(j.data&&confirm('Sostituire i dati locali con quelli del cloud?')){db={...defaultDb(),...j.data,settings:{...defaultDb().settings,...(j.data.settings||{})}};save();location.reload()}}catch(e){showToast('Errore cloud: '+e.message)}}
+async function cloudDownload(){const url=db.settings.apiUrl,pin=db.settings.syncPin;if(!url||!pin)return showToast('Configura URL e PIN');try{const r=await fetch(url+'?action=syncGet&pin='+encodeURIComponent(pin));const j=await r.json();if(!j.ok)throw new Error(j.error||'Errore');if(j.data&&confirm('Sostituire i dati locali con quelli del cloud?')){const localConn={apiUrl:url,syncPin:pin,syncAuto:db.settings.syncAuto};db={...defaultDb(),...j.data,settings:{...defaultDb().settings,...(j.data.settings||{}),...localConn}};persist();location.reload()}}catch(e){showToast('Errore cloud: '+e.message)}}
+let syncBusy=false;
+async function autoCloudSync(notify=false){if(syncBusy||!db.settings.syncAuto)return;const url=db.settings.apiUrl,pin=db.settings.syncPin;if(!url||!pin)return;syncBusy=true;try{const r=await fetch(url+'?action=syncGet&pin='+encodeURIComponent(pin));const j=await r.json();if(!j.ok)throw new Error(j.error||'Errore');if(!j.data){await cloudUpload(true);return}const cloudAt=String(j.data.updatedAt||j.updatedAt||''),localAt=String(db.updatedAt||'');if(cloudAt>localAt){const localConn={apiUrl:url,syncPin:pin,syncAuto:true};db={...defaultDb(),...j.data,settings:{...defaultDb().settings,...(j.data.settings||{}),...localConn}};persist();document.body.className=db.settings.theme||'nordic';renderHome();renderMeds();renderExpiry();renderTherapies();renderSettings();if(notify)showToast('Dati aggiornati dal cloud')}else if(localAt>cloudAt){await cloudUpload(true)}}catch(e){if(notify)showToast('Sincronizzazione non disponibile')}finally{syncBusy=false}}
 function exportData(){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(db,null,2)],{type:'application/json'}));a.download='armadietto_backup_v5.json';a.click();URL.revokeObjectURL(a.href)}
 function importData(inp){const f=inp.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{const x=JSON.parse(r.result);if(confirm('Importare questo backup?')){db={...defaultDb(),...x,settings:{...defaultDb().settings,...(x.settings||{})}};save();location.reload()}}catch{showToast('File non valido')}};r.readAsText(f);inp.value=''}
 function resizeImage(file,maxW=1000,q=.85){return new Promise((res,rej)=>{const img=new Image();img.onload=()=>{const sc=Math.min(1,maxW/img.width),c=document.createElement('canvas');c.width=Math.round(img.width*sc);c.height=Math.round(img.height*sc);c.getContext('2d').drawImage(img,0,0,c.width,c.height);res(c.toDataURL('image/jpeg',q))};img.onerror=()=>rej(new Error('Immagine non leggibile'));img.src=URL.createObjectURL(file)})}
@@ -200,6 +203,9 @@ function closeScanner(){clearInterval(scanTimer);scanTimer=null;if(scanStream){s
 document.body.className=db.settings.theme||'nordic';
 if('serviceWorker'in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});
 renderHome();
+setTimeout(()=>autoCloudSync(true),500);
+document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')autoCloudSync(true)});
+setInterval(()=>autoCloudSync(false),60000);
 </script>
 </body>
 </html>
